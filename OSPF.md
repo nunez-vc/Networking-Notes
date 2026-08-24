@@ -78,3 +78,15 @@
 
 **Autonomous System Boundary Router**
 - Sitting in the boundary of 2 autonomous systems.
+
+**Stub Area**
+- Blocks external routes (routes redistributed into OSPF from other protocols like EIGRP or static routes) while still learning routes from other OSPF areas. Instead of receiving external routes, the ABR provides a default route.
+- “Tell me about other OSPF areas, but don't give me all the external routes.”
+
+**Totally Stubby Area**
+- Blocks both external routes and inter-area routes. Routers inside this area only know how to reach devices in their own local area.
+- "I only need to know my local area. Send everything else to the ABR.”
+
+**Not So Stubby Area (NSSA)**
+- Behaves like a Stub Area but it allows a router inside the area to redistribute external routes into OSPF.
+- “Don't send me external routes from outside, but allow me to introduce my own external routes.”
