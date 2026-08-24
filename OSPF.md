@@ -55,10 +55,26 @@
 
 **DR and BDR Election**
 - Highest Priority Wins
-- To configure OSPF priority: ip ospf priority [priority 3]
+- To configure OSPF priority: ip ospf priority [priority #]
 - A priority of 0 prevents a router from participating in the election.
 - Tie Breaker:
   1. Highest Router ID wins
   2. If there's no configured Router ID, the highest IP address on a Loopback interface wins.
   3. If there's no Loopback interface, the highest IP address on an interface that's up wins.
-  
+
+**OSPF Areas**
+- Multi-Area OSPF networks must have a Backbone Area numbered 0 or 0.0.0.0
+
+**Area Border Routers (ABR)**
+- OSPF router with interfaces connected simultaneously to the backbone area (Area 0) and at least one other non-backbone area.
+- Responsible for generating and advertising Type 3 summary LSAs for every single network in area 0.
+
+**LSA Types**
+1. **Type 1 LSA** - A **Router LSA** is created by each router and contains information about that router's directly attached networks.
+2. **Type 2 LSA** - A **Network LSA** is created for each transit network within an area on which a DR is elected. In order for a router to generate a type 2 LSA, that link has to match 2 criteria. First, it has to be a transit area meaning an OSPF router to an OSPF router (router to router), and second it has to be a link on which you would elect a link a DR.
+3. **Type 3 LSA** - A **Summary LSA** is sent from one area to another and is used to advertise a network in the source area.
+4. **Type 4 LSA** - A **Summary ASBR LSA** is created by an ABR to tell members of an area how to reach an ASBR.
+5. **Type 5 LSA** - A **AS External LSA** is created by and ASBR to advertise networks in a different AS.
+
+**Autonomous System Boundary Router**
+- Sitting in the boundary of 2 autonomous systems.
