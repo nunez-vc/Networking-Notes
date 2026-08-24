@@ -80,6 +80,7 @@ spanning-tree mode mst
 - IEEE 802.1W
 - completely eliminates Listening State.
 - Converge within a few seconds (typically 1 to 2 sec, and 10 sec at most) from blocking state to forwarding state.
+- RSTP+ states: Discarding, Learning, and Forwarding.
 
 <p align="center">
   <img width="550" alt="Local Account, Named ACL, and Security" src="Images/STP/Summary Reference Table.png" />
