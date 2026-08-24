@@ -75,6 +75,7 @@
 3. **Type 3 LSA** - A **Summary LSA** is sent from one area to another and is used to advertise a network in the source area.
 4. **Type 4 LSA** - A **Summary ASBR LSA** is created by an ABR to tell members of an area how to reach an ASBR.
 5. **Type 5 LSA** - A **AS External LSA** is created by and ASBR to advertise networks in a different AS.
+6. **Type 6 LSA** - A **NSSA LSA** is sent from an ASBR into an NSSA to advertise networks from a different AS.
 
 **Autonomous System Boundary Router**
 - Sitting in the boundary of 2 autonomous systems.
@@ -82,11 +83,20 @@
 **Stub Area**
 - Blocks external routes (routes redistributed into OSPF from other protocols like EIGRP or static routes) while still learning routes from other OSPF areas. Instead of receiving external routes, the ABR provides a default route.
 - “Tell me about other OSPF areas, but don't give me all the external routes.”
+- No external routes
 
 **Totally Stubby Area**
 - Blocks both external routes and inter-area routes. Routers inside this area only know how to reach devices in their own local area.
 - "I only need to know my local area. Send everything else to the ABR.”
+- No external + no detailed inter-area routes
 
 **Not So Stubby Area (NSSA)**
 - Behaves like a Stub Area but it allows a router inside the area to redistribute external routes into OSPF.
 - “Don't send me external routes from outside, but allow me to introduce my own external routes.”
+-  Stub + redistribution allowed
+
+**Totally Not So Stubby Area**
+- Combines Totally Stubby + NSSA behavior.
+- It blocks detailed inter-area and external routes, but still allows redistribution from an ASBR inside the area.
+- “Give me only local routes and a default route, but still allow me to redistribute my own external routes.”
+- Totally Stubby + redistribution allowed
