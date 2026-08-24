@@ -9,6 +9,10 @@
 
 **Bridge ID (BID)**
 - Default Bridge Priority is **32768.**  
+<p align="center">
+  <img width="400" alt="Local Account, Named ACL, and Security" src="Images/STP/Bridge ID.png" />
+</p>
+
 
 **Root Port**
 - The one (and only one) port on a non-root bridge that's closest to the Root Bridge, in terms of cost.
@@ -17,14 +21,21 @@
 2. Lowest Port ID connected to the Upstream Switch.
 
 **Short Path Cost Method**
+<p align="center">
+  <img width="400" alt="Local Account, Named ACL, and Security" src="Images/STP/Short Path Cost Method.png" />
+</p>
 
 **Long Path Cost Method**
 Formula: 20 Tbps / Port Speed
+<p align="center">
+  <img width="400" alt="Local Account, Named ACL, and Security" src="Images/STP/Long Path Cost Method.png" />
+</p>
 
 **Designated Port**
 - The one (and only one) port on each segment that is closest to the Root Bridge in terms of cost.
 - These are all downstream.
 - Tie Breaker: Switch Bridge ID.  
+
 
 **Blocking (Non-designated) Port**
 - A port that is administratively enabled, but is not a root port nor a designated port.  
@@ -52,15 +63,59 @@ Formula: 20 Tbps / Port Speed
 
 **Multiple Spanning Tree Protocol (MSTP)**
 - IEEE 802.1s
-- Instead of configuring STP per VLAN, in MSTP you group VLANs in instances.  
+- Instead of configuring STP per VLAN, in MSTP you group VLANs in instances.
+<p align="center">
+  <img width="400" alt="Local Account, Named ACL, and Security" src="Images/STP/Long Path Cost Method.png" />
+</p> 
 
-**MST Configuration:**
+**Multiple Spanning Tree Configuration:**
+```
 spanning-tree mst configuration
-instance <instance #> vlan <VLAN_IDs>
+instance [instance  #] vlan [VLAN ID]
 exit
-spanning-tree mode mst  
+spanning-tree mode mst
+```
 
 **Rapid Per VLAN Spanning Tree Protocol (RPVST+)**
 - IEEE 802.1W
 - completely eliminates Listening State.
 - Converge within a few seconds (typically 1 to 2 sec, and 10 sec at most) from blocking state to forwarding state.
+
+<p align="center">
+  <img width="550" alt="Local Account, Named ACL, and Security" src="Images/STP/Summary Reference Table.png" />
+</p>
+
+**PortFast**
+- Bypass listening and learning state.
+- Can be enabled globally or on a port-by-port basis (for non-trunking ports).
+- To enable portfast globally: spanning-tree portfast default
+- To enable portfast port-by-port basis: spanning-tree portfast
+
+**UplinkFast**
+- Globally enabled on a switch.
+- It enables rapid convergence during a root port link failure by immediately transitioning a blocked alternate port into the forwarding state to serve as the new root port, completely bypassing the traditional 30-second Spanning Tree listening and learning delays.
+- To enable UplinkFast globally: spanning-tree uplinkfast
+
+**BackboneFast**
+- Globally enabled on a switch.
+- Reacts to an indirect link failure.
+- To enable BackboneFast globally: spanning-tree backbonefast
+
+**BPDU Guard**
+- It is a security feature that protects PortFast-enabled access ports by automatically placing the interface into an err-disabled state to prevent loops the moment any Spanning Tree BPDU is received on the port.
+- Should be enabled on ports with PortFast enabled.
+- Can be enabled globally or on a port-by-port basis (for ports with PortFast enabled).
+
+**BPDU Filter**
+- This feature either conditionally monitors PortFast ports globally, disabling PortFast and reverting to normal STP if a BPDU is received, or absolutely disables STP on a specific interface when configured locally by silently discarding all incoming and outgoing BPDUs.
+- Prevents a port from sending BPDUs.
+- Should be only used when necessary.
+- Most dangerous when enabled at the port level.
+
+**Root Guard**
+- This prevents unauthorized or rogue downstream switches from becoming the root bridge by dynamically putting the port into a non-forwarding root-inconsistent (broken) state if a superior BPDU is received, recovering automatically once those superior BPDUs cease.
+- Configured on ports off of which the Root Bridge is unexpected.
+
+**Loop Guard**
+- This prevents Layer 2 forwarding loops caused by unidirectional link failures.
+- This causes a non-designated port to enter Loop Inconsistent (broken) state if it stops receiving BPDUs.
