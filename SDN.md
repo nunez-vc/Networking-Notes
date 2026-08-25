@@ -4,6 +4,11 @@
 - 
 </p>
 
+**SDN Complete Architecture**
+<p align="center">
+  <img width="400" alt="Image" src="Images/SDN/SDN Complete Architecture.png" />
+</p>
+
 **3 Networking Planes**
 1. Data Plane
 - Forwards traffic
@@ -23,7 +28,7 @@
 
 **Northbound and Southbound Interfaces**
 <p align="center">
-  <img width="500" alt="Image" src="Images/.png" />
+  <img width="400" alt="Image" src="Images/SDN/Northbound and Southbound Interfaces.png" />
 </p>
 
 **Northbound Interface**
@@ -31,3 +36,5 @@
 
 **Southbound Interface**
 - Connects the controller to infrastructure devices
+
+
