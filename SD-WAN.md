@@ -476,35 +476,23 @@ A simplified SD-WAN workflow is:
 
 ### Traditional WAN
 
-```text
-Routing Protocol
-      ↓
-Route Metric
-      ↓
-Best Route
-      ↓
-Forward Traffic
-```
+<div align="center">
+  <img
+    src="Images/SD-WAN/Traditional-WAN.png"
+    alt="Traditional-WAN"
+    width="500"
+  />
+</div>
 
 ### SD-WAN
 
-```text
-Application
-     +
-Business Policy
-     +
-Latency
-     +
-Jitter
-     +
-Packet Loss
-     +
-Transport Availability
-     ↓
-Best Path
-     ↓
-Forward Traffic
-```
+<div align="center">
+  <img
+    src="Images/SD-WAN/SD-WAN.png"
+    alt="SD-WAN"
+    width="500"
+  />
+</div>
 
 ---
 
