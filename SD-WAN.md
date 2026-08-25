@@ -478,7 +478,7 @@ A simplified SD-WAN workflow is:
 
 <div align="center">
   <img
-    src="Images/SD-WAN/Traditional-WAN.png"
+    src="Images/SD-WAN/Traditional WAN.png"
     alt="Traditional-WAN"
     width="500"
   />
