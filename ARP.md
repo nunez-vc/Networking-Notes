@@ -179,32 +179,13 @@ show ip arp inspection interfaces
 
 ## Core Mental Model
 
-```text
-Local destination:
-Destination IP
-     |
-     v
-ARP
-     |
-     v
-Destination MAC
-
-
-Remote destination:
-Destination IP
-     |
-     v
-Routing
-     |
-     v
-Next-hop IP
-     |
-     v
-ARP
-     |
-     v
-Next-hop MAC
-```
+<div align="center">
+  <img
+    src="Images/ARP/ARP Model.png"
+    alt="ARP Model"
+    width="600"
+  />
+</div>
 
 **ARP is IPv4's local IP-to-MAC resolution mechanism. It allows a host or router to turn a directly reachable IPv4 next hop into the Layer 2 destination needed to transmit the Ethernet frame.**
 
