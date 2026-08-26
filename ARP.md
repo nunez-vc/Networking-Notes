@@ -133,16 +133,7 @@ show mac address-table address <mac-address>
 Operational troubleshooting chain:
 
 ```text
-Route
-  |
-  v
-Next-hop IP
-  |
-  v
-ARP: IP -> MAC
-  |
-  v
-MAC table: MAC -> switch port
+Route > Next-hop IP > ARP: IP -> MAC > MAC table: MAC -> Switchport
 ```
 
 ---
