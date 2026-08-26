@@ -2,7 +2,7 @@
 
 # Address Resolution Protocol (ARP)
 
-## 1. What is ARP?
+## What is ARP?
 
 **ARP (Address Resolution Protocol)** resolves an **IPv4 address to a Layer 2 MAC address** for a directly reachable neighbor on an Ethernet LAN.
 
@@ -12,7 +12,7 @@ ARP is a local neighbor-resolution mechanism: routing identifies the destination
 
 ---
 
-## 2. How it works
+## How it works
 
 When an IPv4 device needs to transmit over Ethernet, it first determines whether the destination is **local or remote**.
 
@@ -86,7 +86,7 @@ Dynamic entries age out and are relearned when required. Conceptually, ARP resol
 
 ---
 
-## 3. Why and When it is used
+## Why and when it is used
 
 ARP solves one specific problem:
 
@@ -98,7 +98,7 @@ It is not used to resolve remote hosts directly, and **IPv6 does not use ARP**; 
 
 ---
 
-## 4. Key Configuration, Parameters, or CLI
+## Key Configuration, Parameters, or CLI
 
 ### Cisco IOS / IOS XE
 
@@ -138,7 +138,7 @@ Route > Next-hop IP > ARP: IP -> MAC > MAC table: MAC -> Switchport
 
 ---
 
-## 5. Common Gotchas and Misconceptions
+## Common Gotchas and Misconceptions
 
 **ARP does not resolve the final remote destination.** For remote traffic, ARP resolves the local next hop or default gateway.
 
