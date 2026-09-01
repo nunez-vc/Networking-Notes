@@ -454,3 +454,99 @@ PAT state
 PAT ≠ Firewall
 PAT ≠ Unlimited scale
 ```
+
+## CCNA Configuration
+
+**IOS-XE — PAT Interface Roles**
+
+| Command | Description |
+|---|---|
+| **Mark inside interface:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip nat inside` | Marks the interface as the NAT inside interface. |
+| **Mark outside interface:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip nat outside` | Marks the interface as the NAT outside interface. |
+| **Remove inside role:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no ip nat inside` | Removes the NAT inside designation. |
+| **Remove outside role:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no ip nat outside` | Removes the NAT outside designation. |
+
+**IOS-XE — PAT Using Outside Interface Address**
+
+| Command | Description |
+|---|---|
+| **Create standard ACL:**<br>`(config)#ip access-list standard <acl-name>`<br>&nbsp;&nbsp;○ `(config-std-nacl)#permit <source-network> <wildcard-mask>` | Matches inside addresses eligible for PAT. |
+| **Configure interface PAT:**<br>`(config)#ip nat inside source list <acl-name> interface <outside-interface> overload` | Overloads translations onto the outside interface address. |
+| **Remove interface PAT:**<br>`(config)#no ip nat inside source list <acl-name> interface <outside-interface> overload` | Removes the interface-based PAT rule. |
+| **Show PAT translations:**<br>`#show ip nat translations` | Displays active PAT address and port translations. |
+| **Show PAT statistics:**<br>`#show ip nat statistics` | Displays translation counts, mappings, hits, and misses. |
+| **Clear dynamic PAT entries:**<br>`#clear ip nat translation *` | Clears all dynamic PAT translations. |
+
+**IOS-XE — PAT Using Address Pool**
+
+| Command | Description |
+|---|---|
+| **Create PAT pool with netmask:**<br>`(config)#ip nat pool <pool-name> <start-ip> <end-ip> netmask <subnet-mask>` | Creates a PAT global-address pool using a subnet mask. |
+| **Create PAT pool with prefix:**<br>`(config)#ip nat pool <pool-name> <start-ip> <end-ip> prefix-length <prefix-length>` | Creates a PAT global-address pool using prefix length. |
+| **Configure pooled PAT:**<br>`(config)#ip nat inside source list <acl-name> pool <pool-name> overload` | Enables PAT using addresses from the configured pool. |
+| **Remove pooled PAT:**<br>`(config)#no ip nat inside source list <acl-name> pool <pool-name> overload` | Removes the pooled PAT rule. |
+| **Show pooled PAT:**<br>`#show ip nat translations` | Displays active PAT entries using pooled global addresses. |
+| **Show pool utilization:**<br>`#show ip nat statistics` | Displays PAT pool mappings and translation statistics. |
+
+## CCNP Configuration
+
+**CCNP Enterprise — IOS-XE — PAT Translation Tuning**
+
+| Command | Description |
+|---|---|
+| **Set translation timeout:**<br>`(config)#ip nat translation timeout <seconds>` | Sets inactivity timeout for dynamic NAT/PAT translations. |
+| **Restore default timeout:**<br>`(config)#no ip nat translation timeout` | Restores the default dynamic translation timeout. |
+| **Clear one address translation:**<br>`#clear ip nat translation <ip-address>` | Clears dynamic translations associated with the specified address. |
+| **Clear all translations:**<br>`#clear ip nat translation *` | Clears all dynamic NAT/PAT translations. |
+| **Show translation table:**<br>`#show ip nat translations` | Displays PAT protocol, addresses, and translated ports. |
+| **Show translation statistics:**<br>`#show ip nat statistics` | Displays active translations, mappings, hits, and misses. |
+
+**CCNP Security — ASA 9.x — Dynamic PAT Using Interface Address**
+
+| Command | Description |
+|---|---|
+| **Create source object:**<br>`(config)#object network <source-object>`<br>&nbsp;&nbsp;○ `(config-network-object)#subnet <network> <subnet-mask>` | Creates the real source network object. |
+| **Configure interface PAT:**<br>`(config)#object network <source-object>`<br>&nbsp;&nbsp;○ `(config-network-object)#nat (<real-interface>,<mapped-interface>) dynamic interface` | Dynamically PATs the source object to mapped interface address. |
+| **Remove interface PAT:**<br>`(config)#object network <source-object>`<br>&nbsp;&nbsp;○ `(config-network-object)#no nat (<real-interface>,<mapped-interface>) dynamic interface` | Removes interface-address dynamic PAT from the object. |
+
+**CCNP Security — ASA 9.x — Dynamic PAT Pool**
+
+| Command | Description |
+|---|---|
+| **Create PAT pool object:**<br>`(config)#object network <pat-pool-object>`<br>&nbsp;&nbsp;○ `(config-network-object)#range <start-ip> <end-ip>` | Creates the mapped address range used as PAT pool. |
+| **Create source object:**<br>`(config)#object network <source-object>`<br>&nbsp;&nbsp;○ `(config-network-object)#subnet <network> <subnet-mask>` | Creates the real source network object. |
+| **Configure PAT pool:**<br>`(config)#object network <source-object>`<br>&nbsp;&nbsp;○ `(config-network-object)#nat (<real-interface>,<mapped-interface>) dynamic pat-pool <pat-pool-object>` | Dynamically PATs the source object through the PAT pool. |
+| **Enable flat PAT pool:**<br>`(config)#object network <source-object>`<br>&nbsp;&nbsp;○ `(config-network-object)#nat (<real-interface>,<mapped-interface>) dynamic pat-pool <pat-pool-object> flat` | Uses flat port allocation across the PAT pool. |
+| **Reserve privileged ports:**<br>`(config)#object network <source-object>`<br>&nbsp;&nbsp;○ `(config-network-object)#nat (<real-interface>,<mapped-interface>) dynamic pat-pool <pat-pool-object> flat include-reserve` | Includes reserved ports in flat PAT pool allocation. |
+
+**CCNP Security — ASA 9.x — Static PAT / Port Redirection**
+
+| Command | Description |
+|---|---|
+| **Create real server object:**<br>`(config)#object network <real-server-object>`<br>&nbsp;&nbsp;○ `(config-network-object)#host <real-server-ip>` | Creates the internal server network object. |
+| **Create mapped server object:**<br>`(config)#object network <mapped-server-object>`<br>&nbsp;&nbsp;○ `(config-network-object)#host <mapped-ip>` | Creates the externally mapped server address object. |
+| **Configure TCP static PAT:**<br>`(config)#object network <real-server-object>`<br>&nbsp;&nbsp;○ `(config-network-object)#nat (<real-interface>,<mapped-interface>) static <mapped-server-object> service tcp <real-port> <mapped-port>` | Maps one external TCP port to an internal TCP port. |
+| **Configure UDP static PAT:**<br>`(config)#object network <real-server-object>`<br>&nbsp;&nbsp;○ `(config-network-object)#nat (<real-interface>,<mapped-interface>) static <mapped-server-object> service udp <real-port> <mapped-port>` | Maps one external UDP port to an internal UDP port. |
+
+**CCNP Security — ASA 9.x — PAT Verification and Maintenance**
+
+| Command | Description |
+|---|---|
+| **Show NAT rules:**<br>`#show nat detail` | Displays NAT/PAT rules, sections, priorities, and hit counters. |
+| **Show active translations:**<br>`#show xlate` | Displays active NAT and PAT translation slots. |
+| **Show detailed translations:**<br>`#show xlate detail` | Displays detailed PAT flags, ports, timers, and mappings. |
+| **Show running NAT configuration:**<br>`#show running-config nat` | Displays configured ASA NAT and PAT rules. |
+| **Show network objects:**<br>`#show running-config object` | Displays objects referenced by Auto NAT/PAT rules. |
+| **Clear NAT counters:**<br>`#clear nat counters` | Resets NAT/PAT rule hit counters. |
+| **Clear translation table:**<br>`#clear xlate` | Clears active NAT/PAT translation slots. |
+
+**CCNP Security — Secure Firewall Threat Defense — PAT Verification**
+
+| Command | Description |
+|---|---|
+| **Show deployed NAT configuration:**<br>`> show running-config nat` | Displays deployed Threat Defense NAT/PAT configuration. |
+| **Show deployed objects:**<br>`> show running-config object` | Displays network objects referenced by deployed PAT rules. |
+| **Show NAT rule details:**<br>`> show nat detail` | Displays NAT/PAT sections, priorities, and hit counters. |
+| **Show active translations:**<br>`> show xlate detail` | Displays active PAT mappings, ports, flags, and timers. |
+| **Clear NAT counters:**<br>`> clear nat counters` | Resets deployed NAT/PAT rule hit counters. |
+| **Clear translations:**<br>`> clear xlate` | Clears active Threat Defense translation slots. |
