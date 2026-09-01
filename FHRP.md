@@ -745,4 +745,124 @@ FHRP
 ≠ Firewall HA
 ```
 
+## CCNA Configuration
+
+FHRP configuration is outside current CCNA 200-301 scope.
+
+## CCNP Configuration
+
+**CCNP Enterprise — ENCOR 350-401 — IOS-XE Object Tracking**
+
+| Command | Description |
+|---|---|
+| **Track interface line protocol:**<br>`(config)#track <object-id> interface <interface-id> line-protocol` | Tracks the selected interface line-protocol state. |
+| **Track route reachability:**<br>`(config)#track <object-id> ip route <prefix>/<prefix-length> reachability` | Tracks installation and reachability of an IPv4 route. |
+| **Show tracked objects:**<br>`#show track [<object-id>]` | Displays tracked-object state and change information. |
+
+**CCNP Enterprise — ENCOR 350-401 — IOS-XE HSRP Base Configuration**
+
+| Command | Description |
+|---|---|
+| **Create HSRP group:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> ip <virtual-ip>` | Configures the HSRP virtual IPv4 gateway. |
+| **Select HSRP version:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby version <1|2>` | Selects the HSRP version for the interface. |
+| **Set HSRP priority:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> priority <priority>` | Sets the local HSRP election priority. |
+| **Enable preemption:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> preempt` | Enables the preferred router to reclaim active state. |
+| **Set virtual MAC address:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> mac-address <mac-address>` | Manually assigns the HSRP virtual MAC address. |
+
+**CCNP Enterprise — ENCOR 350-401 — IOS-XE HSRP Timers**
+
+| Command | Description |
+|---|---|
+| **Set second-based timers:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> timers <hello-seconds> <hold-seconds>` | Sets HSRP hello and hold timers in seconds. |
+| **Set millisecond timers:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> timers msec <hello-ms> msec <hold-ms>` | Sets HSRP hello and hold timers in milliseconds. |
+
+**CCNP Enterprise — ENCOR 350-401 — IOS-XE HSRP Authentication**
+
+| Command | Description |
+|---|---|
+| **Configure text authentication:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> authentication text <password>` | Configures plaintext HSRP group authentication. |
+| **Configure MD5 key string:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> authentication md5 key-string <key-string>` | Configures HSRP MD5 authentication using a key string. |
+| **Configure MD5 key chain:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> authentication md5 key-chain <key-chain>` | Applies an existing key chain for HSRP MD5 authentication. |
+
+**CCNP Enterprise — ENCOR 350-401 — IOS-XE HSRP Tracking**
+
+| Command | Description |
+|---|---|
+| **Track object with decrement:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> track <object-id> decrement <decrement-value>` | Decrements HSRP priority when the tracked object fails. |
+| **Verify HSRP tracking:**<br>`#show standby [<interface-id>]` | Displays HSRP priority and tracked-object state. |
+
+**CCNP Enterprise — ENCOR 350-401 — IOS-XE HSRP Verification**
+
+| Command | Description |
+|---|---|
+| **Show HSRP state:**<br>`#show standby` | Displays detailed HSRP group state and timers. |
+| **Show interface HSRP state:**<br>`#show standby <interface-id>` | Displays HSRP state for the selected interface. |
+| **Show HSRP summary:**<br>`#show standby brief` | Displays summarized HSRP group and role information. |
+| **Show interface summary:**<br>`#show standby <interface-id> brief` | Displays summarized HSRP state for one interface. |
+
+**CCNP Enterprise — ENCOR 350-401 — IOS-XE VRRPv2**
+
+| Command | Description |
+|---|---|
+| **Create VRRPv2 group:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> ip <virtual-ip>` | Configures the VRRPv2 virtual IPv4 gateway. |
+| **Set VRRP priority:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> priority <priority>` | Sets the local VRRP election priority. |
+| **Track object with decrement:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> track <object-id> decrement <decrement-value>` | Decrements VRRP priority when the tracked object fails. |
+| **Configure text authentication:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> authentication text <password>` | Configures plaintext VRRPv2 authentication. |
+| **Configure MD5 key string:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> authentication md5 key-string <key-string>` | Configures VRRPv2 MD5 authentication using a key string. |
+| **Configure MD5 key chain:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> authentication md5 key-chain <key-chain>` | Applies an existing key chain for VRRPv2 MD5 authentication. |
+
+**CCNP Enterprise — ENCOR 350-401 — IOS-XE VRRPv3**
+
+| Command | Description |
+|---|---|
+| **Enable VRRPv3:**<br>`(config)#fhrp version vrrp v3` | Enables hierarchical VRRPv3 configuration globally. |
+| **Create IPv4 VRRPv3 group:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> address-family ipv4` | Enters the IPv4 VRRPv3 group configuration mode. |
+| **Create IPv6 VRRPv3 group:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> address-family ipv6` | Enters the IPv6 VRRPv3 group configuration mode. |
+| **Enable VRRPv2 compatibility:**<br>`(config-if-vrrp)#vrrpv2` | Enables VRRPv2 compatibility for the VRRPv3 group. |
+| **Set VRRPv3 address:**<br>`(config-if-vrrp)#address <ip-address>` | Configures the VRRPv3 virtual gateway address. |
+| **Set VRRPv3 priority:**<br>`(config-if-vrrp)#priority <priority>` | Sets the local VRRPv3 election priority. |
+| **Track object with decrement:**<br>`(config-if-vrrp)#track <object-id> decrement <decrement-value>` | Decrements VRRPv3 priority when the tracked object fails. |
+
+**CCNP Enterprise — ENCOR 350-401 — IOS-XE VRRP Verification**
+
+| Command | Description |
+|---|---|
+| **Show VRRP state:**<br>`#show vrrp` | Displays detailed VRRP group state and timers. |
+| **Show VRRP summary:**<br>`#show vrrp brief` | Displays summarized VRRP groups, priorities, and roles. |
+
+**CCNP Enterprise — ENCOR 350-401 — IOS-XE GLBP Base Configuration**
+
+| Command | Description |
+|---|---|
+| **Create GLBP group:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> ip <virtual-ip>` | Configures the GLBP virtual IPv4 gateway. |
+| **Set GLBP priority:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> priority <priority>` | Sets the local GLBP AVG election priority. |
+| **Enable preemption:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> preempt` | Enables the preferred router to reclaim AVG state. |
+| **Set GLBP timers:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> timers <hello-seconds> <hold-seconds>` | Sets GLBP hello and hold timers in seconds. |
+| **Set millisecond timers:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> timers msec <hello-ms> msec <hold-ms>` | Sets GLBP hello and hold timers in milliseconds. |
+
+**CCNP Enterprise — ENCOR 350-401 — IOS-XE GLBP Authentication**
+
+| Command | Description |
+|---|---|
+| **Configure text authentication:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> authentication text <password>` | Configures plaintext GLBP authentication. |
+| **Configure MD5 key string:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> authentication md5 key-string <key-string>` | Configures GLBP MD5 authentication using a key string. |
+| **Configure MD5 key chain:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> authentication md5 key-chain <key-chain>` | Applies an existing key chain for GLBP MD5 authentication. |
+
+**CCNP Enterprise — ENCOR 350-401 — IOS-XE GLBP Load Balancing**
+
+| Command | Description |
+|---|---|
+| **Use round-robin balancing:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> load-balancing round-robin` | Selects round-robin GLBP host assignment. |
+| **Use weighted balancing:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> load-balancing weighted` | Selects weighted GLBP host assignment. |
+| **Use host-dependent balancing:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> load-balancing host-dependent` | Selects host-dependent GLBP host assignment. |
+| **Set GLBP weight:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> weighting <weight>` | Sets the local GLBP forwarding weight. |
+
+**CCNP Enterprise — ENCOR 350-401 — IOS-XE GLBP Verification**
+
+| Command | Description |
+|---|---|
+| **Show GLBP state:**<br>`#show glbp` | Displays detailed AVG and AVF state information. |
+| **Show GLBP summary:**<br>`#show glbp brief` | Displays summarized GLBP AVG and AVF status. |
+
+
 </div>
