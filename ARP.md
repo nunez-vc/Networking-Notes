@@ -189,4 +189,82 @@ show ip arp inspection interfaces
 
 **ARP is IPv4's local IP-to-MAC resolution mechanism. It allows a host or router to turn a directly reachable IPv4 next hop into the Layer 2 destination needed to transmit the Ethernet frame.**
 
+## CCNA Configuration
+
+**CCNA 200-301 v2.0 — IOS-XE ARP Cache Verification**
+
+| Command | Description |
+|---|---|
+| **Show ARP table:**<br>`#show ip arp` | Displays the IPv4 ARP cache. |
+| **Show ARP table (alternate):**<br>`#show arp` | Displays the IPv4 ARP cache. |
+| **Clear dynamic ARP entries:**<br>`#clear ip arp [<ip-address>]` | Clears all or one dynamically learned ARP entry. |
+
+**CCNA 200-301 v2.0 — IOS-XE DHCP Snooping Prerequisite for DAI**
+
+| Command | Description |
+|---|---|
+| **Enable DHCP snooping:**<br>`(config)#ip dhcp snooping` | Enables DHCP snooping globally. |
+| **Enable DHCP snooping on VLANs:**<br>`(config)#ip dhcp snooping vlan <vlan-list>` | Enables DHCP snooping on specified VLANs. |
+| **Trust DHCP snooping uplink:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip dhcp snooping trust` | Marks the interface trusted for DHCP snooping. |
+| **Verify DHCP snooping bindings:**<br>`#show ip dhcp snooping binding` | Displays learned DHCP snooping IP-to-MAC bindings. |
+
+**CCNA 200-301 v2.0 — IOS-XE Dynamic ARP Inspection**
+
+| Command | Description |
+|---|---|
+| **Enable DAI on VLANs:**<br>`(config)#ip arp inspection vlan <vlan-range>` | Enables Dynamic ARP Inspection on specified VLANs. |
+| **Trust DAI interface:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip arp inspection trust` | Marks the interface trusted for Dynamic ARP Inspection. |
+| **Restore DAI untrusted state:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no ip arp inspection trust` | Restores the interface to the untrusted DAI state. |
+| **Show DAI status:**<br>`#show ip arp inspection` | Displays DAI configuration, state, and counters. |
+| **Show DAI interface state:**<br>`#show ip arp inspection interfaces [<interface-id>]` | Displays DAI trust state and interface rate limits. |
+| **Show DAI VLAN state:**<br>`#show ip arp inspection vlan <vlan-range>` | Displays DAI state for specified VLANs. |
+| **Show DAI statistics:**<br>`#show ip arp inspection statistics [vlan <vlan-range>]` | Displays forwarded, dropped, and validation counters. |
+
+## CCNP Configuration
+
+**CCNP Security — SCOR 350-701 v1.1 — IOS-XE ARP ACLs for DAI**
+
+| Command | Description |
+|---|---|
+| **Create ARP ACL:**<br>`(config)#arp access-list <acl-name>`<br>&nbsp;&nbsp;○ `(config-arp-nacl)#permit ip host <sender-ip> mac host <sender-mac>` | Creates an ARP ACL with a static IP-to-MAC binding. |
+| **Permit any ARP binding:**<br>`(config-arp-nacl)#permit ip any mac any` | Permits any IP-to-MAC binding in the ARP ACL. |
+| **Apply ARP ACL to VLANs:**<br>`(config)#ip arp inspection filter <arp-acl-name> vlan <vlan-range> [static]` | Applies the ARP ACL to specified DAI VLANs. |
+| **Verify ARP ACL:**<br>`#show arp access-list [<acl-name>]` | Displays configured ARP access-list entries. |
+
+**CCNP Security — SCOR 350-701 v1.1 — IOS-XE DAI Validation**
+
+| Command | Description |
+|---|---|
+| **Enable additional DAI validation:**<br>`(config)#ip arp inspection validate {[src-mac] [dst-mac] [ip]}` | Enables selected MAC and IP ARP validation checks. |
+| **Verify validation settings:**<br>`#show ip arp inspection` | Displays enabled source-MAC, destination-MAC, and IP validation. |
+
+**CCNP Security — SCOR 350-701 v1.1 — IOS-XE DAI Rate Limiting**
+
+| Command | Description |
+|---|---|
+| **Configure ARP rate limit:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip arp inspection limit {rate <pps> [burst interval <seconds>]\|none}` | Sets or removes the interface DAI packet-rate limit. |
+| **Restore default rate limit:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no ip arp inspection limit` | Restores the interface default DAI rate limit. |
+| **Enable ARP-inspection errdisable detection:**<br>`(config)#errdisable detect cause arp-inspection` | Enables errdisable detection for ARP inspection violations. |
+| **Enable automatic recovery:**<br>`(config)#errdisable recovery cause arp-inspection` | Enables automatic recovery from ARP-inspection errdisable events. |
+| **Set recovery interval:**<br>`(config)#errdisable recovery interval <seconds>` | Sets the global errdisable recovery timer. |
+| **Verify rate limits:**<br>`#show ip arp inspection interfaces [<interface-id>]` | Displays configured DAI trust state and rate limits. |
+| **Verify errdisable recovery:**<br>`#show errdisable recovery` | Displays enabled errdisable recovery causes and timers. |
+
+**CCNP Security — SCOR 350-701 v1.1 — IOS-XE DAI Monitoring**
+
+| Command | Description |
+|---|---|
+| **Show DAI statistics:**<br>`#show ip arp inspection statistics [vlan <vlan-range>]` | Displays DAI forwarding, drop, and validation statistics. |
+| **Clear DAI statistics:**<br>`#clear ip arp inspection statistics` | Clears Dynamic ARP Inspection statistics. |
+| **Show DAI log:**<br>`#show ip arp inspection log` | Displays the Dynamic ARP Inspection log buffer. |
+| **Clear DAI log:**<br>`#clear ip arp inspection log` | Clears the Dynamic ARP Inspection log buffer. |
+
+**CCNP Enterprise — ENCOR 350-401 v1.1 — IOS-XE Proxy ARP Hardening**
+
+| Command | Description |
+|---|---|
+| **Disable Proxy ARP:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no ip proxy-arp` | Disables Proxy ARP on the selected interface. |
+| **Re-enable Proxy ARP:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip proxy-arp` | Enables Proxy ARP on the selected interface. |
+
+
 </div>
