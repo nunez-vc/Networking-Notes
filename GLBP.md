@@ -655,4 +655,67 @@ GLBP
 ≠ Standards-based FHRP
 ```
 
+GLBP configuration is CCNP Enterprise scope; current CCNA 200-301 v2.0 omits GLBP configuration.
+
+## CCNP Configuration
+
+**CCNP Enterprise — IOS-XE 17.x — GLBP Base Configuration**
+
+| Command | Description |
+|---|---|
+| **Configure virtual gateway:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> ip <virtual-ip>` | Creates the GLBP group and primary virtual IPv4 address. |
+| **Add secondary virtual address:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> ip <virtual-ip> secondary` | Adds a secondary virtual IPv4 address to the group. |
+| **Set gateway priority:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> priority <priority>` | Sets the local AVG election priority. |
+| **Enable AVG preemption:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> preempt` | Enables higher-priority AVG preemption. |
+| **Delay AVG preemption:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> preempt delay minimum <seconds>` | Delays AVG preemption by the configured interval. |
+| **Assign redundancy name:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> name <redundancy-name>` | Assigns a redundancy-client name to the GLBP group. |
+
+**CCNP Enterprise — IOS-XE 17.x — GLBP Timers**
+
+| Command | Description |
+|---|---|
+| **Set hello and hold timers:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> timers <hello-seconds> <hold-seconds>` | Sets GLBP hello and hold timers in seconds. |
+| **Set millisecond timers:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> timers msec <hello-ms> msec <hold-ms>` | Sets GLBP hello and hold timers in milliseconds. |
+| **Set redirect timers:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> timers redirect <redirect-seconds> <timeout-seconds>` | Sets client redirection and forwarder timeout intervals. |
+
+**CCNP Enterprise — IOS-XE 17.x — GLBP Load Balancing**
+
+| Command | Description |
+|---|---|
+| **Use round-robin balancing:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> load-balancing round-robin` | Selects round-robin GLBP host assignment. |
+| **Use weighted balancing:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> load-balancing weighted` | Selects weighting-based GLBP host assignment. |
+| **Use host-dependent balancing:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> load-balancing host-dependent` | Selects host-dependent GLBP host assignment. |
+| **Set gateway weighting:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> weighting <maximum>` | Sets the initial GLBP gateway weighting value. |
+| **Set weighting thresholds:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> weighting <maximum> lower <lower> upper <upper>` | Sets initial, lower, and upper forwarding weights. |
+
+**CCNP Enterprise — IOS-XE 17.x — GLBP Object Tracking**
+
+| Command | Description |
+|---|---|
+| **Track interface line protocol:**<br>`(config)#track <object-id> interface <interface-id> line-protocol` | Tracks the selected interface line-protocol state. |
+| **Track interface IP routing:**<br>`(config)#track <object-id> interface <interface-id> ip routing` | Tracks IP-routing readiness on the selected interface. |
+| **Apply weighting tracking:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> weighting track <object-id> decrement <value>` | Decrements GLBP weighting when the tracked object fails. |
+| **Set AVF preemption delay:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> forwarder preempt delay minimum <seconds>` | Sets the minimum AVF preemption delay. |
+| **Disable AVF preemption:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no glbp <group-id> forwarder preempt` | Disables AVF preemption for the GLBP group. |
+| **Verify tracked object:**<br>`#show track <object-id>` | Displays state and status for the tracked object. |
+
+**CCNP Enterprise — IOS-XE 17.x — GLBP Authentication**
+
+| Command | Description |
+|---|---|
+| **Configure text authentication:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> authentication text <string>` | Configures plaintext GLBP group authentication. |
+| **Configure MD5 key string:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> authentication md5 key-string <key>` | Configures MD5 authentication with a direct key string. |
+| **Create authentication key chain:**<br>`(config)#key chain <key-chain-name>`<br>&nbsp;&nbsp;○ `(config-keychain)#key <key-id>`<br>&nbsp;&nbsp;○ `(config-keychain-key)#key-string <key-string>` | Creates a key chain for GLBP MD5 authentication. |
+| **Apply MD5 key chain:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#glbp <group-id> authentication md5 key-chain <key-chain-name>` | Applies the configured MD5 key chain to GLBP. |
+| **Verify key chain:**<br>`#show key chain` | Displays configured key-chain information. |
+
+**CCNP Enterprise — IOS-XE 17.x — GLBP Verification**
+
+| Command | Description |
+|---|---|
+| **Show GLBP state:**<br>`#show glbp` | Displays detailed GLBP AVG and AVF state. |
+| **Show GLBP summary:**<br>`#show glbp brief` | Displays summarized GLBP groups, AVG, and AVF roles. |
+| **Show specific group:**<br>`#show glbp <group-id>` | Displays detailed information for one GLBP group. |
+
+
 </div>
