@@ -829,4 +829,87 @@ DHCP
 ≠ Security policy
 ```
 
+## CCNA Configuration
+
+**CCNA 200-301 v2.0 — IOS-XE DHCPv4 Server**
+
+| Command | Description |
+|---|---|
+| **Exclude one address:**<br>`(config)#ip dhcp excluded-address <ip-address>` | Excludes one IPv4 address from DHCP allocation. |
+| **Exclude address range:**<br>`(config)#ip dhcp excluded-address <low-address> <high-address>` | Excludes an IPv4 address range from DHCP allocation. |
+| **Create DHCP pool:**<br>`(config)#ip dhcp pool <pool-name>`<br>&nbsp;&nbsp;○ `(dhcp-config)#network <network-number> <subnet-mask>` | Creates a pool and defines its client subnet. |
+| **Use prefix length:**<br>`(config)#ip dhcp pool <pool-name>`<br>&nbsp;&nbsp;○ `(dhcp-config)#network <network-number> /<prefix-length>` | Defines the pool subnet using CIDR prefix length. |
+| **Set default gateway:**<br>`(config)#ip dhcp pool <pool-name>`<br>&nbsp;&nbsp;○ `(dhcp-config)#default-router <ip-address> [<ip-address2> ...]` | Supplies one or more default-router addresses to clients. |
+| **Set DNS servers:**<br>`(config)#ip dhcp pool <pool-name>`<br>&nbsp;&nbsp;○ `(dhcp-config)#dns-server <ip-address> [<ip-address2> ...]` | Supplies DNS server addresses to DHCP clients. |
+| **Set domain name:**<br>`(config)#ip dhcp pool <pool-name>`<br>&nbsp;&nbsp;○ `(dhcp-config)#domain-name <domain-name>` | Supplies the DNS domain name to clients. |
+| **Set lease duration:**<br>`(config)#ip dhcp pool <pool-name>`<br>&nbsp;&nbsp;○ `(dhcp-config)#lease <days> [<hours> [<minutes>]]` | Sets the DHCP lease duration. |
+| **Set infinite lease:**<br>`(config)#ip dhcp pool <pool-name>`<br>&nbsp;&nbsp;○ `(dhcp-config)#lease infinite` | Configures leases without expiration. |
+| **Set next server:**<br>`(config)#ip dhcp pool <pool-name>`<br>&nbsp;&nbsp;○ `(dhcp-config)#next-server <ip-address> [<ip-address2> ...]` | Supplies next-server addresses to DHCP clients. |
+| **Show DHCP bindings:**<br>`#show ip dhcp binding` | Displays active DHCP server bindings. |
+| **Show DHCP pool:**<br>`#show ip dhcp pool [<pool-name>]` | Displays pool ranges, utilization, and lease counts. |
+| **Show server statistics:**<br>`#show ip dhcp server statistics` | Displays DHCP server message and binding statistics. |
+| **Show address conflicts:**<br>`#show ip dhcp conflict` | Displays addresses marked as DHCP conflicts. |
+
+**CCNA 200-301 v2.0 — IOS-XE DHCPv4 Relay**
+
+| Command | Description |
+|---|---|
+| **Configure DHCP relay:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip helper-address <dhcp-server-ip>` | Relays supported UDP broadcasts to the specified server. |
+| **Add another DHCP server:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip helper-address <additional-server-ip>` | Adds another helper destination on the client-facing interface. |
+| **Remove DHCP relay:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no ip helper-address <dhcp-server-ip>` | Removes the specified helper destination. |
+| **Verify helper address:**<br>`#show ip interface <interface-id>` | Displays configured helper addresses on the interface. |
+| **Verify relay configuration:**<br>`#show running-config interface <interface-id>` | Displays helper commands configured under the interface. |
+
+**CCNA 200-301 v2.0 — IOS-XE DHCPv4 Client**
+
+| Command | Description |
+|---|---|
+| **Configure routed-interface client:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip address dhcp` | Obtains the interface IPv4 configuration through DHCP. |
+| **Configure SVI client:**<br>`(config)#interface vlan <vlan-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip address dhcp` | Obtains the SVI IPv4 configuration through DHCP. |
+| **Show DHCP lease:**<br>`#show dhcp lease` | Displays DHCP-learned lease information. |
+| **Verify interface address:**<br>`#show ip interface brief` | Displays assigned interface IPv4 addresses and status. |
+| **Verify SVI address:**<br>`#show interfaces vlan <vlan-id>` | Displays the SVI address and operational state. |
+
+**CCNA 200-301 v2.0 — IOS-XE Catalyst DHCP Snooping**
+
+| Command | Description |
+|---|---|
+| **Enable DHCP snooping:**<br>`(config)#ip dhcp snooping` | Enables DHCP snooping globally. |
+| **Enable snooping on VLANs:**<br>`(config)#ip dhcp snooping vlan <vlan-list>` | Enables DHCP snooping on specified VLANs. |
+| **Trust infrastructure interface:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip dhcp snooping trust` | Marks the interface trusted for DHCP server messages. |
+| **Restore untrusted state:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no ip dhcp snooping trust` | Restores the default untrusted snooping state. |
+| **Disable Option 82 insertion:**<br>`(config)#no ip dhcp snooping information option` | Disables DHCP snooping Option 82 insertion. |
+| **Enable Option 82 insertion:**<br>`(config)#ip dhcp snooping information option` | Enables DHCP snooping Option 82 insertion. |
+| **Set DHCP rate limit:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip dhcp snooping limit rate <pps>` | Limits received DHCP messages per second. |
+| **Remove DHCP rate limit:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no ip dhcp snooping limit rate` | Removes the configured DHCP snooping rate limit. |
+| **Enable errdisable recovery:**<br>`(config)#errdisable recovery cause dhcp-rate-limit` | Enables automatic recovery after DHCP rate-limit errdisable. |
+| **Set recovery interval:**<br>`(config)#errdisable recovery interval <seconds>` | Sets the global errdisable recovery interval. |
+| **Show snooping status:**<br>`#show ip dhcp snooping` | Displays DHCP snooping configuration and interface trust states. |
+| **Show snooping bindings:**<br>`#show ip dhcp snooping binding` | Displays dynamically learned DHCP snooping bindings. |
+| **Show snooping statistics:**<br>`#show ip dhcp snooping statistics` | Displays DHCP snooping packet counters. |
+| **Show errdisable recovery:**<br>`#show errdisable recovery` | Displays errdisable recovery causes and timers. |
+
+## CCNP Configuration
+
+**CCNP Security — SCOR 350-701 v2.0 — IOS-XE Catalyst DHCP Snooping Persistence**
+
+| Command | Description |
+|---|---|
+| **Configure TFTP binding database:**<br>`(config)#ip dhcp snooping database tftp://<server>/<filename>` | Stores DHCP snooping bindings on a TFTP destination. |
+| **Configure flash binding database:**<br>`(config)#ip dhcp snooping database flash:/<filename>` | Stores DHCP snooping bindings in local flash. |
+| **Set database timeout:**<br>`(config)#ip dhcp snooping database timeout <seconds>` | Sets the binding database transfer timeout. |
+| **Set database write delay:**<br>`(config)#ip dhcp snooping database write-delay <seconds>` | Sets delay before writing changed snooping bindings. |
+| **Verify binding database:**<br>`#show ip dhcp snooping database [detail]` | Displays binding database agent status and statistics. |
+| **Verify source bindings:**<br>`#show ip source binding` | Displays dynamically and statically learned source bindings. |
+
+**CCNP Security — SCOR 350-701 v2.0 — IOS-XE Catalyst DHCP Snooping Validation**
+
+| Command | Description |
+|---|---|
+| **Enable MAC verification:**<br>`(config)#ip dhcp snooping verify mac-address` | Verifies client hardware address against source MAC address. |
+| **Disable MAC verification:**<br>`(config)#no ip dhcp snooping verify mac-address` | Disables DHCP snooping source-MAC verification. |
+| **Allow untrusted Option 82:**<br>`(config)#ip dhcp snooping information option allow-untrusted` | Accepts Option 82 packets arriving on untrusted interfaces. |
+| **Verify snooping state:**<br>`#show ip dhcp snooping` | Displays Option 82, verification, trust, and VLAN state. |
+
+
 </div>
