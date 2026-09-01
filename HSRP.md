@@ -647,6 +647,8 @@ HSRP
 ≠ Load balancing within one group
 ≠ Complete end-to-end redundancy
 
+```
+
 ## CCNA Configuration
 
 HSRP configuration is CCNP Enterprise scope; current CCNA covers FHRP operation only.
@@ -737,4 +739,3 @@ HSRP configuration is CCNP Enterprise scope; current CCNA covers FHRP operation 
 | **Show specific group summary:**<br>`#show standby <interface-type> <interface-number> <group-id> brief` | Displays summarized state for one HSRP group. |
 
 
-```
