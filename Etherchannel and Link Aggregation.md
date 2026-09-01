@@ -977,4 +977,137 @@ Load-Balance Verification
 = show etherchannel load-balance
 ```
 
+## CCNA Configuration
+
+**IOS-XE — Static Layer 2 EtherChannel**
+
+| Command | Description |
+|---|---|
+| **Create static trunk EtherChannel:**<br>`(config)#interface range <interface-range>`<br>&nbsp;&nbsp;○ `(config-if-range)#switchport mode trunk`<br>&nbsp;&nbsp;○ `(config-if-range)#channel-group <number> mode on` | Creates a static Layer 2 trunk EtherChannel. |
+| **Configure Port-channel trunk:**<br>`(config)#interface port-channel <number>`<br>&nbsp;&nbsp;○ `(config-if)#switchport mode trunk` | Configures the logical Port-channel as a trunk. |
+| **Configure Port-channel access mode:**<br>`(config)#interface port-channel <number>`<br>&nbsp;&nbsp;○ `(config-if)#switchport mode access`<br>&nbsp;&nbsp;○ `(config-if)#switchport access vlan <vlan-id>` | Configures the logical Port-channel as an access port. |
+
+**IOS-XE — LACP EtherChannel**
+
+| Command | Description |
+|---|---|
+| **Create active LACP channel:**<br>`(config)#interface range <interface-range>`<br>&nbsp;&nbsp;○ `(config-if-range)#channel-group <number> mode active` | Initiates LACP negotiation on member interfaces. |
+| **Create passive LACP channel:**<br>`(config)#interface range <interface-range>`<br>&nbsp;&nbsp;○ `(config-if-range)#channel-group <number> mode passive` | Responds to LACP negotiation on member interfaces. |
+| **Configure LACP trunk:**<br>`(config)#interface port-channel <number>`<br>&nbsp;&nbsp;○ `(config-if)#switchport mode trunk` | Configures the LACP Port-channel as a trunk. |
+
+**IOS-XE — PAgP EtherChannel**
+
+| Command | Description |
+|---|---|
+| **Create desirable PAgP channel:**<br>`(config)#interface range <interface-range>`<br>&nbsp;&nbsp;○ `(config-if-range)#channel-group <number> mode desirable` | Initiates PAgP negotiation on member interfaces. |
+| **Create auto PAgP channel:**<br>`(config)#interface range <interface-range>`<br>&nbsp;&nbsp;○ `(config-if-range)#channel-group <number> mode auto` | Responds to PAgP negotiation on member interfaces. |
+| **Configure PAgP trunk:**<br>`(config)#interface port-channel <number>`<br>&nbsp;&nbsp;○ `(config-if)#switchport mode trunk` | Configures the PAgP Port-channel as a trunk. |
+
+**IOS-XE — Layer 3 EtherChannel**
+
+| Command | Description |
+|---|---|
+| **Create routed member links:**<br>`(config)#interface range <interface-range>`<br>&nbsp;&nbsp;○ `(config-if-range)#no switchport`<br>&nbsp;&nbsp;○ `(config-if-range)#channel-group <number> mode on` | Creates a static Layer 3 EtherChannel. |
+| **Configure routed Port-channel:**<br>`(config)#interface port-channel <number>`<br>&nbsp;&nbsp;○ `(config-if)#no switchport`<br>&nbsp;&nbsp;○ `(config-if)#ip address <ipv4-address> <subnet-mask>` | Assigns IPv4 addressing to the routed Port-channel. |
+
+**IOS-XE — EtherChannel Load Balancing**
+
+| Command | Description |
+|---|---|
+| **Set source MAC hash:**<br>`(config)#port-channel load-balance src-mac` | Selects source-MAC EtherChannel hashing. |
+| **Set destination MAC hash:**<br>`(config)#port-channel load-balance dst-mac` | Selects destination-MAC EtherChannel hashing. |
+| **Set source-destination MAC hash:**<br>`(config)#port-channel load-balance src-dst-mac` | Selects source-and-destination MAC hashing. |
+| **Set source IP hash:**<br>`(config)#port-channel load-balance src-ip` | Selects source-IP EtherChannel hashing. |
+| **Set destination IP hash:**<br>`(config)#port-channel load-balance dst-ip` | Selects destination-IP EtherChannel hashing. |
+| **Set source-destination IP hash:**<br>`(config)#port-channel load-balance src-dst-ip` | Selects source-and-destination IP hashing. |
+| **Set source port hash:**<br>`(config)#port-channel load-balance src-port` | Selects source TCP/UDP port hashing. |
+| **Set destination port hash:**<br>`(config)#port-channel load-balance dst-port` | Selects destination TCP/UDP port hashing. |
+| **Set source-destination port hash:**<br>`(config)#port-channel load-balance src-dst-port` | Selects source-and-destination TCP/UDP port hashing. |
+
+**IOS-XE — EtherChannel Verification**
+
+| Command | Description |
+|---|---|
+| **Show EtherChannel summary:**<br>`#show etherchannel summary` | Displays channel state, protocol, and member status. |
+| **Show one channel summary:**<br>`#show etherchannel <number> summary` | Displays summary information for one channel group. |
+| **Show channel configuration:**<br>`#show etherchannel` | Displays configured EtherChannel groups and parameters. |
+| **Show Port-channel details:**<br>`#show etherchannel port-channel` | Displays detailed logical Port-channel information. |
+| **Show one Port-channel interface:**<br>`#show interfaces portchannel <number>` | Displays interface status, bandwidth, and active members. |
+| **Show member interface status:**<br>`#show interfaces <interface-id>` | Displays physical member operational and suspended states. |
+| **Show trunk state:**<br>`#show interfaces <interface-id> trunk` | Displays trunk state, native VLAN, and allowed VLANs. |
+| **Show load-balance method:**<br>`#show etherchannel load-balance` | Displays the configured EtherChannel hashing method. |
+
+## CCNP Configuration
+
+**CCNP Enterprise — IOS-XE LACP Rate**
+
+| Command | Description |
+|---|---|
+| **Enable fast LACP:**<br>`(config)#interface range <interface-range>`<br>&nbsp;&nbsp;○ `(config-if-range)#lacp rate fast` | Requests fast LACPDU transmission on member interfaces. |
+| **Enable slow LACP:**<br>`(config)#interface range <interface-range>`<br>&nbsp;&nbsp;○ `(config-if-range)#lacp rate slow` | Requests slow LACPDU transmission on member interfaces. |
+| **Verify LACP rate:**<br>`#show lacp internal` | Displays local LACP flags, state, priority, and keys. |
+
+**CCNP Enterprise — IOS-XE LACP Minimum and Maximum Links**
+
+| Command | Description |
+|---|---|
+| **Set minimum active links:**<br>`(config)#interface port-channel <number>`<br>&nbsp;&nbsp;○ `(config-if)#port-channel min-links <min-links>` | Sets minimum active members required for Port-channel operation. |
+| **Set maximum active links:**<br>`(config)#interface port-channel <number>`<br>&nbsp;&nbsp;○ `(config-if)#lacp max-bundle <max-links>` | Limits active LACP members in the Port-channel. |
+| **Verify bundle state:**<br>`#show etherchannel summary` | Displays active, standby, and minimum-links channel states. |
+
+**CCNP Enterprise — IOS-XE LACP Priority**
+
+| Command | Description |
+|---|---|
+| **Set LACP system priority:**<br>`(config)#lacp system-priority <priority>` | Sets the local LACP system priority. |
+| **Set LACP port priority:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#lacp port-priority <priority>` | Sets LACP selection priority for a member interface. |
+| **Show LACP system ID:**<br>`#show lacp system-id` | Displays the local LACP system priority and identifier. |
+| **Show LACP internal state:**<br>`#show lacp internal` | Displays local member priorities, keys, and LACP states. |
+
+**CCNP Enterprise — IOS-XE PAgP Non-Silent Mode**
+
+| Command | Description |
+|---|---|
+| **Enable desirable non-silent:**<br>`(config)#interface range <interface-range>`<br>&nbsp;&nbsp;○ `(config-if-range)#channel-group <number> mode desirable non-silent` | Enables PAgP desirable non-silent operation. |
+| **Enable auto non-silent:**<br>`(config)#interface range <interface-range>`<br>&nbsp;&nbsp;○ `(config-if-range)#channel-group <number> mode auto non-silent` | Enables PAgP auto non-silent operation. |
+
+**CCNP Enterprise — IOS-XE Advanced Load Balancing**
+
+| Command | Description |
+|---|---|
+| **Set mixed destination hash:**<br>`(config)#port-channel load-balance dst-mixed-ip-port` | Hashes destination IP and destination TCP/UDP port. |
+| **Set mixed source hash:**<br>`(config)#port-channel load-balance src-mixed-ip-port` | Hashes source IP and source TCP/UDP port. |
+| **Set mixed bidirectional hash:**<br>`(config)#port-channel load-balance src-dst-mixed-ip-port` | Hashes source/destination IP addresses and TCP/UDP ports. |
+| **Set available hash method:**<br>`(config)#port-channel load-balance <hash-method>` | Sets systemwide hash; available methods vary by platform/release. |
+| **Show load-balance method:**<br>`#show etherchannel load-balance` | Displays hashing behavior for non-IP, IPv4, and IPv6. |
+| **Show member load values:**<br>`#show etherchannel port` | Displays member state and load-distribution values. |
+
+**CCNP Enterprise — IOS-XE LACP Verification**
+
+| Command | Description |
+|---|---|
+| **Show LACP neighbors:**<br>`#show lacp neighbor` | Displays remote LACP partner information. |
+| **Show detailed LACP neighbors:**<br>`#show lacp neighbor detail` | Displays detailed remote LACP partner information. |
+| **Show LACP counters:**<br>`#show lacp counters` | Displays transmitted, received, and error LACPDU counters. |
+| **Show LACP internal state:**<br>`#show lacp internal` | Displays local LACP member operational parameters. |
+| **Show LACP system identifier:**<br>`#show lacp system-id` | Displays local LACP priority and system identifier. |
+
+**CCNP Enterprise — IOS-XE PAgP Verification**
+
+| Command | Description |
+|---|---|
+| **Show PAgP neighbors:**<br>`#show pagp neighbor` | Displays remote PAgP neighbor and port information. |
+| **Show PAgP counters:**<br>`#show pagp counters` | Displays transmitted and received PAgP packet counters. |
+
+**CCNP Enterprise — IOS-XE EtherChannel Detailed Verification**
+
+| Command | Description |
+|---|---|
+| **Show EtherChannel summary:**<br>`#show etherchannel summary` | Displays channel protocol, state, and member flags. |
+| **Show Port-channel details:**<br>`#show interface port-channel <number>` | Displays detailed logical Port-channel interface information. |
+| **Show EtherChannel details:**<br>`#show etherchannel <number> detail` | Displays detailed state for the selected channel group. |
+| **Show member-port details:**<br>`#show etherchannel <number> port` | Displays detailed member information for one channel group. |
+| **Show trunk consistency:**<br>`#show interface <interface-id> trunk` | Displays trunk mode, native VLAN, and allowed VLANs. |
+
+
 </div>
