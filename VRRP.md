@@ -713,4 +713,57 @@ VRRP
 ≠ Complete end-to-end redundancy
 ```
 
+## CCNA Configuration
+
+VRRP configuration is outside current CCNA 200-301 configuration scope.
+
+## CCNP Configuration
+
+**CCNP Enterprise — IOS-XE — Object Tracking**
+
+| Command | Description |
+|---|---|
+| **Track interface line protocol:**<br>`(config)#track <object-id> interface <interface-id> line-protocol` | Tracks the selected interface line-protocol state. |
+| **Track route reachability:**<br>`(config)#track <object-id> ip route <prefix>/<prefix-length> reachability` | Tracks installation and reachability of an IPv4 route. |
+| **Show tracked object:**<br>`#show track [<object-id>]` | Displays tracked-object state and status. |
+
+**CCNP Enterprise — IOS-XE — VRRPv2 Base Configuration**
+
+| Command | Description |
+|---|---|
+| **Configure virtual IPv4 address:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> ip <virtual-ip>` | Creates the VRRPv2 group and virtual IPv4 gateway. |
+| **Set VRRP priority:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> priority <1-255>` | Sets the local VRRPv2 election priority. |
+| **Track object with decrement:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> track <object-id> decrement <decrement-value>` | Decrements VRRPv2 priority when the tracked object fails. |
+
+**CCNP Enterprise — IOS-XE — VRRPv2 Authentication**
+
+| Command | Description |
+|---|---|
+| **Configure text authentication:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> authentication text <password>` | Configures plaintext authentication for the VRRPv2 group. |
+| **Configure text authentication shorthand:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> authentication <password>` | Configures plaintext authentication using legacy VRRPv2 syntax. |
+| **Configure MD5 key string:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> authentication md5 key-string <key-string>` | Configures VRRPv2 MD5 authentication using a direct key. |
+| **Create key chain:**<br>`(config)#key chain <key-chain-name>`<br>&nbsp;&nbsp;○ `(config-keychain)#key <key-id>`<br>&nbsp;&nbsp;○ `(config-keychain-key)#key-string <key-string>` | Creates a reusable key chain for VRRP authentication. |
+| **Configure MD5 key chain:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> authentication md5 key-chain <key-chain-name>` | Applies a key chain for VRRPv2 MD5 authentication. |
+
+**CCNP Enterprise — IOS-XE — VRRPv3 Hierarchical Configuration**
+
+| Command | Description |
+|---|---|
+| **Enable VRRPv3 globally:**<br>`(config)#fhrp version vrrp v3` | Enables hierarchical VRRPv3 configuration on the device. |
+| **Create IPv4 VRRPv3 group:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> address-family ipv4` | Enters IPv4 VRRPv3 group configuration mode. |
+| **Create IPv6 VRRPv3 group:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#vrrp <group-id> address-family ipv6` | Enters IPv6 VRRPv3 group configuration mode. |
+| **Enable VRRPv2 compatibility:**<br>`(config-if-vrrp)#vrrpv2` | Enables VRRPv2 compatibility for the hierarchical group. |
+| **Configure virtual address:**<br>`(config-if-vrrp)#address <virtual-ip>` | Configures the VRRPv3 virtual gateway address. |
+| **Set VRRP priority:**<br>`(config-if-vrrp)#priority <1-255>` | Sets the local VRRPv3 election priority. |
+| **Track object with decrement:**<br>`(config-if-vrrp)#track <object-id> decrement <decrement-value>` | Decrements VRRPv3 priority when the tracked object fails. |
+
+**CCNP Enterprise — IOS-XE — VRRP Verification**
+
+| Command | Description |
+|---|---|
+| **Show VRRP state:**<br>`#show vrrp` | Displays detailed VRRP group state and parameters. |
+| **Show VRRP summary:**<br>`#show vrrp brief` | Displays summarized VRRP groups, priorities, and master state. |
+| **Show tracking state:**<br>`#show track [<object-id>]` | Displays tracked-object state used by VRRP priority tracking. |
+
+
 </div>
