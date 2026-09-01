@@ -683,4 +683,56 @@ Core Rule
 = CDP proves direct Layer 2 discovery, not Layer 3 connectivity
 ```
 
+## CCNA Configuration
+
+**IOS-XE — Global CDP Control**
+
+| Command | Description |
+|---|---|
+| **Enable CDP globally:**<br>`(config)#cdp run` | Enables CDP globally; CDP is not explicit in CCNA v1.1. |
+| **Disable CDP globally:**<br>`(config)#no cdp run` | Disables CDP globally on the device. |
+
+**IOS-XE — Interface CDP Control**
+
+| Command | Description |
+|---|---|
+| **Enable CDP on interface:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#cdp enable` | Enables CDP advertisements and processing on the interface. |
+| **Disable CDP on interface:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no cdp enable` | Disables CDP advertisements and processing on the interface. |
+
+**IOS-XE — CDP Timers**
+
+| Command | Description |
+|---|---|
+| **Set advertisement interval:**<br>`(config)#cdp timer <5-254>` | Sets CDP advertisement transmission interval in seconds. |
+| **Set holdtime:**<br>`(config)#cdp holdtime <10-255>` | Sets advertised CDP neighbor holdtime in seconds. |
+
+**IOS-XE — CDP Verification**
+
+| Command | Description |
+|---|---|
+| **Show global CDP status:**<br>`#show cdp` | Displays global CDP timers and advertisement version. |
+| **Show CDP interfaces:**<br>`#show cdp interface [<interface-id>]` | Displays CDP status and timers per interface. |
+| **Show CDP neighbors:**<br>`#show cdp neighbors [<interface-id>]` | Displays summarized directly connected CDP neighbors. |
+| **Show detailed neighbors:**<br>`#show cdp neighbors [<interface-id>] detail` | Displays detailed information for discovered CDP neighbors. |
+| **Show specific neighbor:**<br>`#show cdp entry <device-name>` | Displays detailed information for one named CDP neighbor. |
+| **Filter neighbor details:**<br>`#show cdp entry <device-name> [protocol|version]` | Displays selected protocol or software-version neighbor details. |
+| **Show CDP traffic counters:**<br>`#show cdp traffic` | Displays CDP transmit, receive, and error counters. |
+
+## CCNP Configuration
+
+**CCNP Security — IOS-XE CDPv2 Control**
+
+| Command | Description |
+|---|---|
+| **Disable CDPv2 advertisements:**<br>`(config)#no cdp advertise-v2` | Disables CDPv2 advertisements; CDP is not explicit in SCOR v2.0. |
+| **Enable CDPv2 advertisements:**<br>`(config)#cdp advertise-v2` | Enables CDPv2 advertisements globally. |
+
+**CCNP Security — IOS-XE CDP Maintenance**
+
+| Command | Description |
+|---|---|
+| **Clear CDP counters:**<br>`#clear cdp counters` | Resets global CDP traffic counters. |
+| **Clear CDP neighbor table:**<br>`#clear cdp table` | Deletes learned CDP neighbor-table entries. |
+
+
 </div>
