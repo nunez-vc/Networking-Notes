@@ -189,7 +189,7 @@ show ip arp inspection interfaces
 
 **ARP is IPv4's local IP-to-MAC resolution mechanism. It allows a host or router to turn a directly reachable IPv4 next hop into the Layer 2 destination needed to transmit the Ethernet frame.**
 
-## CCNA Configuration
+## CCNA Configuration Cheatsheet
 
 **CCNA 200-301 v2.0 — IOS-XE ARP Cache Verification**
 
@@ -220,7 +220,7 @@ show ip arp inspection interfaces
 | **Show DAI VLAN state:**<br>`#show ip arp inspection vlan <vlan-range>` | Displays DAI state for specified VLANs. |
 | **Show DAI statistics:**<br>`#show ip arp inspection statistics [vlan <vlan-range>]` | Displays forwarded, dropped, and validation counters. |
 
-## CCNP Configuration
+## CCNP Configuration Cheatsheet
 
 **CCNP Security — SCOR 350-701 v1.1 — IOS-XE ARP ACLs for DAI**
 
