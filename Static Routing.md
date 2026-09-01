@@ -634,3 +634,172 @@ Route Selection
 
 Static Routing
 = Deterministic but manually maintained
+```
+
+## CCNA Configuration
+
+**IOS-XE — IPv4 Static Network Routes**
+
+| Command | Description |
+|---|---|
+| **Configure next-hop route:**<br>`(config)#ip route <network> <subnet-mask> <next-hop-ip>` | Creates a recursive IPv4 static network route. |
+| **Configure exit-interface route:**<br>`(config)#ip route <network> <subnet-mask> <outgoing-interface>` | Creates a directly attached IPv4 static route. |
+| **Remove next-hop route:**<br>`(config)#no ip route <network> <subnet-mask> <next-hop-ip>` | Removes the specified recursive IPv4 static route. |
+| **Remove exit-interface route:**<br>`(config)#no ip route <network> <subnet-mask> <outgoing-interface>` | Removes the specified directly attached static route. |
+
+**IOS-XE — IPv4 Default Route**
+
+| Command | Description |
+|---|---|
+| **Configure default route:**<br>`(config)#ip route 0.0.0.0 0.0.0.0 <next-hop-ip>` | Creates an IPv4 static default route. |
+| **Configure interface default route:**<br>`(config)#ip route 0.0.0.0 0.0.0.0 <outgoing-interface>` | Creates an interface-based IPv4 default route. |
+| **Remove default route:**<br>`(config)#no ip route 0.0.0.0 0.0.0.0 <next-hop-ip>` | Removes the specified IPv4 static default route. |
+
+**IOS-XE — IPv4 Host Route**
+
+| Command | Description |
+|---|---|
+| **Configure host route:**<br>`(config)#ip route <host-ip> 255.255.255.255 <next-hop-ip>` | Creates an IPv4 static route to one host. |
+| **Configure interface host route:**<br>`(config)#ip route <host-ip> 255.255.255.255 <outgoing-interface>` | Creates an interface-based IPv4 host route. |
+
+**IOS-XE — IPv4 Floating Static Route**
+
+| Command | Description |
+|---|---|
+| **Configure floating route:**<br>`(config)#ip route <network> <subnet-mask> <next-hop-ip> <administrative-distance>` | Creates a static route with modified administrative distance. |
+| **Configure interface floating route:**<br>`(config)#ip route <network> <subnet-mask> <outgoing-interface> <administrative-distance>` | Creates an interface static route with modified distance. |
+| **Configure floating default:**<br>`(config)#ip route 0.0.0.0 0.0.0.0 <next-hop-ip> <administrative-distance>` | Creates a floating IPv4 static default route. |
+
+**IOS-XE — IPv4 Static Route Verification**
+
+| Command | Description |
+|---|---|
+| **Show static routes:**<br>`#show ip route static` | Displays installed IPv4 static routes. |
+| **Show specific route:**<br>`#show ip route <destination>` | Displays detailed routing information for the destination. |
+| **Show routing table:**<br>`#show ip route` | Displays the complete IPv4 routing table. |
+
+**IOS-XE — IPv6 Static Network Routes**
+
+| Command | Description |
+|---|---|
+| **Configure GUA next-hop route:**<br>`(config)#ipv6 route <prefix>/<prefix-length> <next-hop-gua>` | Creates an IPv6 static route using global next hop. |
+| **Configure fully specified GUA route:**<br>`(config)#ipv6 route <prefix>/<prefix-length> <outgoing-interface> <next-hop-gua>` | Creates an IPv6 route using interface and global next hop. |
+| **Configure link-local next-hop route:**<br>`(config)#ipv6 route <prefix>/<prefix-length> <outgoing-interface> <next-hop-lla>` | Creates an IPv6 route using a link-local next hop. |
+| **Remove GUA next-hop route:**<br>`(config)#no ipv6 route <prefix>/<prefix-length> <next-hop-gua>` | Removes the specified IPv6 static route. |
+
+**IOS-XE — IPv6 Default Route**
+
+| Command | Description |
+|---|---|
+| **Configure GUA default route:**<br>`(config)#ipv6 route ::/0 <next-hop-gua>` | Creates an IPv6 default route using global next hop. |
+| **Configure link-local default route:**<br>`(config)#ipv6 route ::/0 <outgoing-interface> <next-hop-lla>` | Creates an IPv6 default route using link-local next hop. |
+
+**IOS-XE — IPv6 Host Route**
+
+| Command | Description |
+|---|---|
+| **Configure host route:**<br>`(config)#ipv6 route <host-ipv6>/128 <next-hop-gua>` | Creates an IPv6 static route to one host. |
+| **Configure link-local host route:**<br>`(config)#ipv6 route <host-ipv6>/128 <outgoing-interface> <next-hop-lla>` | Creates an IPv6 host route through link-local next hop. |
+
+**IOS-XE — IPv6 Floating Static Route**
+
+| Command | Description |
+|---|---|
+| **Configure floating route:**<br>`(config)#ipv6 route <prefix>/<prefix-length> <next-hop-gua> <administrative-distance>` | Creates an IPv6 static route with modified distance. |
+| **Configure interface floating route:**<br>`(config)#ipv6 route <prefix>/<prefix-length> <outgoing-interface> <administrative-distance>` | Creates an interface IPv6 route with modified distance. |
+| **Configure floating default:**<br>`(config)#ipv6 route ::/0 <next-hop-gua> <administrative-distance>` | Creates a floating IPv6 static default route. |
+
+**IOS-XE — IPv6 Static Route Verification**
+
+| Command | Description |
+|---|---|
+| **Show static routes:**<br>`#show ipv6 route static` | Displays installed IPv6 static routes. |
+| **Show specific prefix:**<br>`#show ipv6 route <prefix>/<prefix-length>` | Displays detailed routing information for one IPv6 prefix. |
+| **Show destination lookup:**<br>`#show ipv6 route <ipv6-address>` | Displays the route used for the specified destination. |
+| **Show static route details:**<br>`#show ipv6 static detail` | Displays configured IPv6 static routes and installation state. |
+| **Show routing table:**<br>`#show ipv6 route` | Displays the complete IPv6 routing table. |
+
+## CCNP Configuration
+
+**CCNP Enterprise — IOS-XE — Fully Specified IPv4 Static Routes**
+
+| Command | Description |
+|---|---|
+| **Configure fully specified route:**<br>`(config)#ip route <network> <subnet-mask> <outgoing-interface> <next-hop-ip>` | Creates a route specifying interface and next-hop address. |
+| **Configure fully specified default:**<br>`(config)#ip route 0.0.0.0 0.0.0.0 <outgoing-interface> <next-hop-ip>` | Creates a fully specified IPv4 default route. |
+| **Remove fully specified route:**<br>`(config)#no ip route <network> <subnet-mask> <outgoing-interface> <next-hop-ip>` | Removes the specified fully specified static route. |
+
+**CCNP Enterprise — IOS-XE — Static Null Routes and Route Tags**
+
+| Command | Description |
+|---|---|
+| **Configure Null0 route:**<br>`(config)#ip route <network> <subnet-mask> Null0` | Creates a discard static route through Null0. |
+| **Configure tagged static route:**<br>`(config)#ip route <network> <subnet-mask> <next-hop-ip> tag <tag-value>` | Assigns a route tag to the static route. |
+| **Configure permanent route:**<br>`(config)#ip route <network> <subnet-mask> <next-hop-ip> permanent` | Keeps the static route installed despite next-hop resolution loss. |
+
+**CCNP Enterprise — IOS-XE — IPv4 VRF Static Routing**
+
+| Command | Description |
+|---|---|
+| **Configure VRF static route:**<br>`(config)#ip route vrf <vrf-name> <network> <subnet-mask> <next-hop-ip>` | Creates an IPv4 static route inside the specified VRF. |
+| **Remove VRF static route:**<br>`(config)#no ip route vrf <vrf-name> <network> <subnet-mask> <next-hop-ip>` | Removes the specified IPv4 VRF static route. |
+| **Show VRF routing table:**<br>`#show ip route vrf <vrf-name>` | Displays the IPv4 routing table for one VRF. |
+
+**CCNP Enterprise — IOS-XE — IPv6 VRF Static Routing**
+
+| Command | Description |
+|---|---|
+| **Configure VRF IPv6 route:**<br>`(config)#ipv6 route vrf <vrf-name> <prefix>/<prefix-length> <next-hop-ipv6>` | Creates an IPv6 static route inside the specified VRF. |
+| **Configure tracked VRF IPv6 route:**<br>`(config)#ipv6 route vrf <vrf-name> <prefix>/<prefix-length> <outgoing-interface> <next-hop-ipv6> track <object-id>` | Associates an IPv6 VRF static route with tracking. |
+| **Show VRF IPv6 routes:**<br>`#show ipv6 route vrf <vrf-name>` | Displays the IPv6 routing table for one VRF. |
+
+**CCNP Enterprise — IOS-XE — IP SLA Tracked Static Route**
+
+| Command | Description |
+|---|---|
+| **Create IP SLA operation:**<br>`(config)#ip sla <operation-number>` | Enters configuration mode for one IP SLA operation. |
+| **Configure ICMP echo probe:**<br>`(config-ip-sla)#icmp-echo <destination-ip> [source-interface <interface-id>]` | Configures an ICMP echo reachability probe. |
+| **Set probe frequency:**<br>`(config-ip-sla-echo)#frequency <seconds>` | Sets the interval between IP SLA probes. |
+| **Schedule SLA continuously:**<br>`(config)#ip sla schedule <operation-number> life forever start-time now` | Starts the IP SLA operation immediately and continuously. |
+| **Create tracking object:**<br>`(config)#track <object-id> ip sla <operation-number> reachability` | Tracks reachability reported by the IP SLA operation. |
+| **Delay track transitions:**<br>`(config-track)#delay up <seconds> down <seconds>` | Delays tracked-object up and down state notifications. |
+| **Track static route:**<br>`(config)#ip route <network> <subnet-mask> <next-hop-ip> track <object-id>` | Installs the static route while the tracking object is up. |
+| **Show SLA configuration:**<br>`#show ip sla configuration` | Displays configured IP SLA operations and parameters. |
+| **Show SLA statistics:**<br>`#show ip sla statistics [<operation-number>]` | Displays current operational status and SLA statistics. |
+| **Show tracking state:**<br>`#show track [<object-id>]` | Displays tracked-object state and associated SLA status. |
+
+**CCNP Security — ASA 9.x — IPv4 Static Routing**
+
+| Command | Description |
+|---|---|
+| **Configure static route:**<br>`(config)#route <interface-name> <destination-ip> <netmask> <gateway-ip>` | Creates an ASA IPv4 static route. |
+| **Set administrative distance:**<br>`(config)#route <interface-name> <destination-ip> <netmask> <gateway-ip> <distance>` | Creates an ASA static route with custom distance. |
+| **Configure default route:**<br>`(config)#route <interface-name> 0.0.0.0 0.0.0.0 <gateway-ip>` | Creates an ASA IPv4 static default route. |
+| **Configure floating default:**<br>`(config)#route <interface-name> 0.0.0.0 0.0.0.0 <gateway-ip> <distance>` | Creates an ASA floating static default route. |
+| **Remove static route:**<br>`(config)#no route <interface-name> <destination-ip> <netmask> <gateway-ip>` | Removes the specified ASA IPv4 static route. |
+| **Show routing table:**<br>`#show route` | Displays the ASA routing table. |
+
+**CCNP Security — ASA 9.x — IPv6 Static Routing**
+
+| Command | Description |
+|---|---|
+| **Configure IPv6 static route:**<br>`(config)#ipv6 route <interface-name> <prefix>/<prefix-length> <gateway-ipv6>` | Creates an ASA IPv6 static route. |
+| **Set IPv6 route distance:**<br>`(config)#ipv6 route <interface-name> <prefix>/<prefix-length> <gateway-ipv6> <distance>` | Creates an ASA IPv6 route with custom distance. |
+| **Configure IPv6 default route:**<br>`(config)#ipv6 route <interface-name> ::/0 <gateway-ipv6>` | Creates an ASA IPv6 static default route. |
+| **Configure floating IPv6 default:**<br>`(config)#ipv6 route <interface-name> ::/0 <gateway-ipv6> <distance>` | Creates an ASA floating IPv6 default route. |
+
+**CCNP Security — ASA 9.x — Tracked Static Routing**
+
+| Command | Description |
+|---|---|
+| **Create SLA monitor:**<br>`(config)#sla monitor <sla-id>` | Enters ASA SLA monitoring configuration mode. |
+| **Configure ICMP echo:**<br>`(config-sla-monitor)#type echo protocol ipicmpecho <target-ip> interface <interface-name>` | Configures ICMP reachability monitoring through the selected interface. |
+| **Set probe frequency:**<br>`(config-sla-monitor-echo)#frequency <seconds>` | Sets the interval between ASA SLA probes. |
+| **Schedule SLA monitor:**<br>`(config)#sla monitor schedule <sla-id> life forever start-time now` | Starts the ASA SLA monitor immediately and continuously. |
+| **Create tracking object:**<br>`(config)#track <track-id> rtr <sla-id> reachability` | Associates an ASA tracking object with SLA reachability. |
+| **Track static route:**<br>`(config)#route <interface-name> <destination-ip> <netmask> <gateway-ip> [<distance>] track <track-id>` | Associates the ASA static route with the tracking object. |
+| **Configure backup route:**<br>`(config)#route <backup-interface> <destination-ip> <netmask> <backup-gateway-ip> <higher-distance>` | Creates a higher-distance backup static route. |
+| **Show SLA configuration:**<br>`#show sla monitor configuration [<sla-id>]` | Displays ASA SLA monitor configuration and defaults. |
+| **Show SLA state:**<br>`#show sla monitor operational-state [<sla-id>]` | Displays ASA SLA monitor operational statistics. |
+| **Show tracking state:**<br>`#show track [<track-id>]` | Displays ASA tracked-object reachability state. |
+
