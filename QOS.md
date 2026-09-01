@@ -949,4 +949,110 @@ Core Rule
 = QoS controls who gets service when contention occurs
 ```
 
+## CCNA Configuration
+
+Current CCNA 200-301 v1.1 QoS scope is explanation-only; no CLI configuration commands are required.
+
+## CCNP Configuration
+
+**CCNP Enterprise — IOS-XE — MQC Classification**
+
+| Command | Description |
+|---|---|
+| **Create match-all class map:**<br>`(config)#class-map match-all <class-map-name>` | Enters class-map mode using logical AND matching. |
+| **Create match-any class map:**<br>`(config)#class-map match-any <class-map-name>` | Enters class-map mode using logical OR matching. |
+| **Match named ACL:**<br>`(config-cmap)#match access-group name <acl-name>` | Classifies traffic matched by the named ACL. |
+| **Match numbered ACL:**<br>`(config-cmap)#match access-group <acl-number>` | Classifies traffic matched by the numbered ACL. |
+| **Match all traffic:**<br>`(config-cmap)#match any` | Matches every packet entering the class map. |
+| **Match CoS:**<br>`(config-cmap)#match cos <cos-value-list>` | Matches specified Layer 2 CoS values. |
+| **Match DSCP:**<br>`(config-cmap)#match dscp <dscp-value-list>` | Matches specified DSCP values for IPv4 and IPv6. |
+| **Match IPv4 DSCP:**<br>`(config-cmap)#match ip dscp <dscp-value-list>` | Matches specified DSCP values for IPv4 traffic. |
+| **Match precedence:**<br>`(config-cmap)#match precedence <precedence-value-list>` | Matches specified precedence values for IPv4 and IPv6. |
+| **Match IPv4 precedence:**<br>`(config-cmap)#match ip precedence <precedence-value-list>` | Matches specified IP precedence values for IPv4. |
+| **Match RTP ports:**<br>`(config-cmap)#match ip rtp <starting-port> <port-range>` | Matches RTP traffic within the specified UDP port range. |
+| **Match NBAR protocol:**<br>`(config-cmap)#match protocol <protocol-name>` | Matches an NBAR protocol; platform support varies. |
+| **Match QoS group:**<br>`(config-cmap)#match qos-group <qos-group-value>` | Matches the specified internal QoS group value. |
+
+**CCNP Enterprise — IOS-XE — MQC Policy Construction**
+
+| Command | Description |
+|---|---|
+| **Create policy map:**<br>`(config)#policy-map <policy-map-name>` | Enters policy-map configuration mode. |
+| **Attach class map:**<br>`(config-pmap)#class <class-map-name>` | Enters policy class configuration for classified traffic. |
+| **Enter default class:**<br>`(config-pmap)#class class-default` | Enters the implicit class for otherwise unmatched traffic. |
+| **Apply inbound policy:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#service-policy input <policy-map-name>` | Applies the policy map to interface ingress traffic. |
+| **Apply outbound policy:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#service-policy output <policy-map-name>` | Applies the policy map to interface egress traffic. |
+| **Remove inbound policy:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no service-policy input <policy-map-name>` | Removes the inbound service policy from the interface. |
+| **Remove outbound policy:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no service-policy output <policy-map-name>` | Removes the outbound service policy from the interface. |
+
+**CCNP Enterprise — IOS-XE — Class-Based Marking**
+
+| Command | Description |
+|---|---|
+| **Set DSCP:**<br>`(config-pmap-c)#set dscp <dscp-value>` | Marks DSCP for classified IPv4 and IPv6 packets. |
+| **Set IPv4 DSCP:**<br>`(config-pmap-c)#set ip dscp <dscp-value>` | Marks DSCP for classified IPv4 packets. |
+| **Set CoS:**<br>`(config-pmap-c)#set cos <cos-value>` | Marks the Layer 2 CoS value. |
+| **Set precedence:**<br>`(config-pmap-c)#set precedence <precedence-value>` | Marks precedence for classified IPv4 and IPv6 packets. |
+| **Set IPv4 precedence:**<br>`(config-pmap-c)#set ip precedence <precedence-value>` | Marks IP precedence for classified IPv4 packets. |
+| **Set QoS group:**<br>`(config-pmap-c)#set qos-group <qos-group-id>` | Assigns an internal QoS group identifier. |
+
+**CCNP Enterprise — IOS-XE — Class-Based Policing**
+
+| Command | Description |
+|---|---|
+| **Configure basic policer:**<br>`(config-pmap-c)#police <cir-bps>` | Polices traffic to the specified committed information rate. |
+| **Police and drop excess:**<br>`(config-pmap-c)#police <cir-bps> conform-action transmit exceed-action drop` | Transmits conforming traffic and drops excess traffic. |
+| **Set single-rate bursts:**<br>`(config-pmap-c)#police cir <cir-bps> bc <bc-bytes> be <be-bytes>` | Configures CIR, committed burst, and excess burst sizes. |
+| **Remark exceeding traffic:**<br>`(config-pmap-c)#police <cir-bps> conform-action transmit exceed-action set-dscp-transmit <dscp-value>` | Remarks and transmits traffic exceeding the CIR. |
+| **Configure three-color policer:**<br>`(config-pmap-c)#police <cir-bps> conform-action set-dscp-transmit <conform-dscp> exceed-action set-dscp-transmit <exceed-dscp> violate-action drop` | Applies distinct conform, exceed, and violate actions. |
+| **Configure two-rate policer:**<br>`(config-pmap-c)#police cir <cir-bps> pir <pir-bps> conform-action transmit exceed-action set-dscp-transmit <dscp-value> violate-action drop` | Configures CIR/PIR policing with three traffic actions. |
+
+**CCNP Enterprise — IOS-XE — LLQ and CBWFQ**
+
+| Command | Description |
+|---|---|
+| **Configure strict priority rate:**<br>`(config-pmap-c)#priority <kbps>` | Creates a strict-priority queue with conditional policing. |
+| **Configure strict priority percent:**<br>`(config-pmap-c)#priority percent <percentage>` | Allocates strict-priority bandwidth as an interface percentage. |
+| **Configure level-1 priority:**<br>`(config-pmap-c)#priority level 1` | Creates an unconstrained level-1 strict-priority queue. |
+| **Configure level-2 priority:**<br>`(config-pmap-c)#priority level 2` | Creates an unconstrained level-2 strict-priority queue. |
+| **Configure level-1 percent:**<br>`(config-pmap-c)#priority level 1 percent <percentage>` | Configures level-1 priority with percentage-based conditional policing. |
+| **Configure level-2 percent:**<br>`(config-pmap-c)#priority level 2 percent <percentage>` | Configures level-2 priority with percentage-based conditional policing. |
+| **Guarantee bandwidth:**<br>`(config-pmap-c)#bandwidth <kbps>` | Guarantees minimum class bandwidth in kilobits per second. |
+| **Guarantee bandwidth percent:**<br>`(config-pmap-c)#bandwidth percent <percentage>` | Guarantees minimum bandwidth as an absolute percentage. |
+| **Allocate remaining percent:**<br>`(config-pmap-c)#bandwidth remaining percent <percentage>` | Allocates a percentage of bandwidth remaining after priority traffic. |
+| **Allocate remaining ratio:**<br>`(config-pmap-c)#bandwidth remaining ratio <ratio>` | Allocates remaining bandwidth using relative class ratios. |
+| **Enable flow fair queuing:**<br>`(config-pmap-c)#fair-queue` | Enables flow-based fair queuing within the class. |
+
+**CCNP Enterprise — IOS-XE — Congestion Avoidance**
+
+| Command | Description |
+|---|---|
+| **Enable WRED:**<br>`(config-pmap-c)#random-detect` | Enables precedence-based weighted random early detection. |
+| **Enable DSCP WRED:**<br>`(config-pmap-c)#random-detect dscp-based` | Enables WRED using DSCP-based thresholds. |
+| **Enable precedence WRED:**<br>`(config-pmap-c)#random-detect precedence-based` | Enables WRED using precedence-based thresholds. |
+| **Enable CoS WRED:**<br>`(config-pmap-c)#random-detect cos-based` | Enables WRED using CoS-based thresholds. |
+| **Set queue limit:**<br>`(config-pmap-c)#queue-limit <packets>` | Sets the class queue tail-drop limit. |
+
+**CCNP Enterprise — IOS-XE — Class-Based Shaping and HQoS**
+
+| Command | Description |
+|---|---|
+| **Configure average shaping:**<br>`(config-pmap-c)#shape average <mean-rate-bps>` | Shapes egress traffic to the configured average rate. |
+| **Set shaping bursts:**<br>`(config-pmap-c)#shape average <mean-rate-bps> <bc-bytes> <be-bytes>` | Configures average shaping with explicit burst values. |
+| **Configure peak shaping:**<br>`(config-pmap-c)#shape peak <mean-rate-bps> <bc-bytes> <be-bytes>` | Configures peak-rate shaping with explicit burst values. |
+| **Create hierarchical parent:**<br>`(config)#policy-map <parent-policy-name>`<br>&nbsp;&nbsp;○ `(config-pmap)#class class-default`<br>&nbsp;&nbsp;○ `(config-pmap-c)#shape average <mean-rate-bps>`<br>&nbsp;&nbsp;○ `(config-pmap-c)#service-policy <child-policy-name>` | Shapes parent traffic and invokes the child QoS policy. |
+| **Apply hierarchical policy:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#service-policy output <parent-policy-name>` | Applies the hierarchical shaping policy outbound. |
+
+**CCNP Enterprise — IOS-XE — QoS Verification**
+
+| Command | Description |
+|---|---|
+| **Show all class maps:**<br>`#show class-map` | Displays configured class maps and match criteria. |
+| **Show one class map:**<br>`#show class-map <class-map-name>` | Displays match criteria for the specified class map. |
+| **Show all policy maps:**<br>`#show policy-map` | Displays configured QoS policy maps and actions. |
+| **Show one policy map:**<br>`#show policy-map <policy-map-name>` | Displays actions and parameters for one policy map. |
+| **Show interface policies:**<br>`#show policy-map interface` | Displays attached service policies and runtime counters. |
+| **Show interface QoS counters:**<br>`#show policy-map interface <interface-id>` | Displays class counters, rates, drops, and QoS actions. |
+
+
 </div>
