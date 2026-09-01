@@ -737,4 +737,97 @@ VTP ≠ 802.1Q
 VTP ≠ STP
 ```
 
+## CCNA Configuration
+
+**Current live CCNA 200-301 v1.1 — VTP configuration is outside exam scope.**
+
+## CCNP Configuration
+
+**CCNP Enterprise — IOS-XE 17.x — VTP Base Configuration (supporting switching reference; not explicit ENCOR 350-401 v1.2 blueprint)**
+
+| Command | Description |
+|---|---|
+| **Set VTP domain:**<br>`(config)#vtp domain <domain-name>` | Configures the VTP administrative domain name. |
+| **Select VTP version:**<br>`(config)#vtp version <1|2|3>` | Selects the VTP protocol version. |
+| **Set server mode:**<br>`(config)#vtp mode server` | Sets the switch to VTP server mode. |
+| **Set client mode:**<br>`(config)#vtp mode client` | Sets the switch to VTP client mode. |
+| **Set transparent mode:**<br>`(config)#vtp mode transparent` | Sets the switch to VTP transparent mode. |
+| **Disable VTP:**<br>`(config)#vtp mode off` | Disables VTP participation and advertisement forwarding. |
+| **Set VTP password:**<br>`(config)#vtp password <password>` | Configures the VTP domain password. |
+| **Remove VTP password:**<br>`(config)#no vtp password` | Removes the configured VTP domain password. |
+
+**CCNP Enterprise — IOS-XE 17.x — VTPv3 Database Mode**
+
+| Command | Description |
+|---|---|
+| **Set VLAN server mode:**<br>`(config)#vtp mode server vlan` | Sets VTPv3 server mode for the VLAN database. |
+| **Set VLAN client mode:**<br>`(config)#vtp mode client vlan` | Sets VTPv3 client mode for the VLAN database. |
+| **Set VLAN transparent mode:**<br>`(config)#vtp mode transparent vlan` | Sets VTPv3 transparent mode for the VLAN database. |
+| **Disable VLAN VTP instance:**<br>`(config)#vtp mode off vlan` | Disables VTPv3 for the VLAN database. |
+| **Set MST server mode:**<br>`(config)#vtp mode server mst` | Sets VTPv3 server mode for the MST database. |
+| **Set MST client mode:**<br>`(config)#vtp mode client mst` | Sets VTPv3 client mode for the MST database. |
+| **Set MST transparent mode:**<br>`(config)#vtp mode transparent mst` | Sets VTPv3 transparent mode for the MST database. |
+| **Disable MST VTP instance:**<br>`(config)#vtp mode off mst` | Disables VTPv3 for the MST database. |
+
+**CCNP Enterprise — IOS-XE 17.x — VTPv3 Password Protection**
+
+| Command | Description |
+|---|---|
+| **Configure hidden password:**<br>`(config)#vtp password <password> hidden` | Stores a derived secret instead of cleartext password. |
+| **Configure secret directly:**<br>`(config)#vtp password <32-hex-secret> secret` | Configures the VTPv3 secret in hexadecimal form. |
+| **Verify VTP password:**<br>`#show vtp password` | Displays configured VTP password status and storage form. |
+
+**CCNP Enterprise — IOS-XE 17.x — VTPv3 Primary Server**
+
+| Command | Description |
+|---|---|
+| **Become VLAN primary:**<br>`#vtp primary vlan` | Promotes the switch to VLAN VTPv3 primary server. |
+| **Force VLAN takeover:**<br>`#vtp primary vlan force` | Forces VLAN primary takeover despite conflicting servers. |
+| **Become MST primary:**<br>`#vtp primary mst` | Promotes the switch to MST VTPv3 primary server. |
+| **Force MST takeover:**<br>`#vtp primary mst force` | Forces MST primary takeover despite conflicting servers. |
+
+**CCNP Enterprise — IOS-XE 17.x — VTP VLAN Propagation**
+
+| Command | Description |
+|---|---|
+| **Create VLAN:**<br>`(config)#vlan <vlan-id>` | Creates a VLAN on the writable VTP server database. |
+| **Name VLAN:**<br>`(config-vlan)#name <vlan-name>` | Assigns a name to the selected VLAN. |
+| **Delete VLAN:**<br>`(config)#no vlan <vlan-id>` | Deletes the specified VLAN from the writable database. |
+| **Verify propagated VLANs:**<br>`#show vlan brief` | Displays locally present VLANs and access-port assignments. |
+
+**CCNP Enterprise — IOS-XE 17.x — VTP Pruning**
+
+| Command | Description |
+|---|---|
+| **Enable VTP pruning:**<br>`(config)#vtp pruning` | Enables VTP pruning for the administrative domain. |
+| **Disable VTP pruning:**<br>`(config)#no vtp pruning` | Disables VTP pruning. |
+| **Add pruning-eligible VLANs:**<br>`(config)#interface <trunk-interface>`<br>&nbsp;&nbsp;○ `(config-if)#switchport trunk pruning vlan add <vlan-list>` | Adds VLANs to the trunk pruning-eligible list. |
+| **Remove pruning-eligible VLANs:**<br>`(config)#interface <trunk-interface>`<br>&nbsp;&nbsp;○ `(config-if)#switchport trunk pruning vlan remove <vlan-list>` | Removes VLANs from the trunk pruning-eligible list. |
+| **Exclude pruning VLANs:**<br>`(config)#interface <trunk-interface>`<br>&nbsp;&nbsp;○ `(config-if)#switchport trunk pruning vlan except <vlan-list>` | Makes all supported VLANs except listed VLANs pruning-eligible. |
+| **Disable trunk pruning eligibility:**<br>`(config)#interface <trunk-interface>`<br>&nbsp;&nbsp;○ `(config-if)#switchport trunk pruning vlan none` | Makes no VLANs pruning-eligible on the trunk. |
+| **Verify pruning status:**<br>`#show vtp status` | Displays global VTP pruning mode. |
+| **Verify pruning eligibility:**<br>`#show interfaces <trunk-interface> switchport` | Displays pruning-enabled VLANs for the trunk interface. |
+
+**CCNP Enterprise — IOS-XE 17.x — VTPv3 Per-Port Control**
+
+| Command | Description |
+|---|---|
+| **Enable VTP on trunk:**<br>`(config)#interface <trunk-interface>`<br>&nbsp;&nbsp;○ `(config-if)#vtp` | Enables VTPv3 processing on the trunk interface. |
+| **Disable VTP on trunk:**<br>`(config)#interface <trunk-interface>`<br>&nbsp;&nbsp;○ `(config-if)#no vtp` | Disables VTPv3 processing on the trunk interface. |
+| **Verify per-port VTP:**<br>`#show vtp interface [<interface-id>]` | Displays VTP state for all or one interface. |
+| **Verify interface configuration:**<br>`#show running-config interface <interface-id>` | Displays configured per-port VTP commands. |
+
+**CCNP Enterprise — IOS-XE 17.x — VTP Verification**
+
+| Command | Description |
+|---|---|
+| **Show VTP status:**<br>`#show vtp status` | Displays VTP version, domain, mode, revision, and pruning. |
+| **Show VTP counters:**<br>`#show vtp counters` | Displays VTP advertisement, error, and pruning counters. |
+| **Show VTPv3 devices:**<br>`#show vtp devices` | Displays discovered VTPv3 devices in the domain. |
+| **Show primary conflicts:**<br>`#show vtp devices conflicts` | Displays VTPv3 devices with conflicting primary servers. |
+| **Show VTP interfaces:**<br>`#show vtp interface` | Displays VTP status across participating interfaces. |
+| **Show VTP password:**<br>`#show vtp password` | Displays configured VTP password information. |
+| **Show VLAN database:**<br>`#show vlan` | Displays VLANs currently present on the switch. |
+
+
 </div>
