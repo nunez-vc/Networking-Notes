@@ -129,6 +129,14 @@
 
 ---
 
+## **Totally Not So Stubby Area**
+- Combines Totally Stubby + NSSA behavior.
+- It blocks detailed inter-area and external routes, but still allows redistribution from an ASBR inside the area.
+- “Give me only local routes and a default route, but still allow me to redistribute my own external routes.”
+- Totally Stubby + redistribution allowed
+
+---
+
 ## CCNA Configuration
 
 **IOS-XE — OSPFv2 Process and Interface Activation**
@@ -303,10 +311,3 @@
 | **Enable interface MD5 authentication:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip ospf authentication message-digest` | Enables OSPF MD5 authentication on the interface. |
 | **Configure MD5 key:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip ospf message-digest-key <key-id> md5 <password>` | Configures the OSPF MD5 key and key identifier. |
 | **Verify MD5 authentication:**<br>`#show ip ospf interface <interface-id>` | Displays OSPF authentication configuration and interface state. |
-
-
-## **Totally Not So Stubby Area**
-- Combines Totally Stubby + NSSA behavior.
-- It blocks detailed inter-area and external routes, but still allows redistribution from an ASBR inside the area.
-- “Give me only local routes and a default route, but still allow me to redistribute my own external routes.”
-- Totally Stubby + redistribution allowed
