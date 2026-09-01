@@ -646,4 +646,95 @@ HSRP
 ≠ Routing
 ≠ Load balancing within one group
 ≠ Complete end-to-end redundancy
+
+## CCNA Configuration
+
+HSRP configuration is CCNP Enterprise scope; current CCNA covers FHRP operation only.
+
+## CCNP Configuration
+
+**CCNP Enterprise — IOS-XE 17.x — HSRP Base Configuration**
+
+| Command | Description |
+|---|---|
+| **Configure HSRP version:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby version <1|2>` | Selects HSRP version for all groups on the interface. |
+| **Configure virtual IPv4 address:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> ip <virtual-ip>` | Activates the HSRP group with a virtual IPv4 address. |
+| **Add secondary virtual address:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> ip <virtual-ip> secondary` | Adds a secondary virtual IPv4 address to the group. |
+| **Assign group name:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> name <group-name>` | Assigns an administrative name to the HSRP group. |
+| **Set virtual MAC address:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> mac-address <mac-address>` | Manually assigns the HSRP virtual MAC address. |
+
+**CCNP Enterprise — IOS-XE 17.x — HSRP Priority and Preemption**
+
+| Command | Description |
+|---|---|
+| **Set HSRP priority:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> priority <priority>` | Sets the local HSRP election priority. |
+| **Enable preemption:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> preempt` | Enables the higher-priority router to reclaim active state. |
+| **Set preemption delay:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> preempt delay [minimum <seconds>] [reload <seconds>] [sync <seconds>]` | Configures minimum, reload, or synchronization preemption delays. |
+| **Disable preemption:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no standby <group-id> preempt` | Disables preemption for the selected HSRP group. |
+
+**CCNP Enterprise — IOS-XE 17.x — HSRP Timers and Initialization**
+
+| Command | Description |
+|---|---|
+| **Set second-based timers:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> timers <hello-seconds> <hold-seconds>` | Sets HSRP hello and hold timers in seconds. |
+| **Set millisecond timers:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> timers msec <hello-ms> msec <hold-ms>` | Sets HSRP hello and hold timers in milliseconds. |
+| **Delay HSRP initialization:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby delay minimum <min-seconds> reload <reload-seconds>` | Delays HSRP initialization after link-up and device reload. |
+| **Verify initialization delay:**<br>`#show standby delay [<interface-type> <interface-number>]` | Displays configured HSRP initialization delay values. |
+
+**CCNP Enterprise — IOS-XE 17.x — HSRP Object Tracking**
+
+| Command | Description |
+|---|---|
+| **Track interface line protocol:**<br>`(config)#track <object-id> interface <interface-id> line-protocol` | Tracks the selected interface line-protocol state. |
+| **Track IPv4 route reachability:**<br>`(config)#track <object-id> ip route <prefix>/<prefix-length> reachability` | Tracks reachability of the selected IPv4 route. |
+| **Track with priority decrement:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> track <object-id> decrement <decrement-value>` | Decrements HSRP priority when the tracked object fails. |
+| **Track with group shutdown:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> track <object-id> shutdown` | Shuts the HSRP group when the tracked object fails. |
+| **Remove tracked object:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no standby <group-id> track <object-id>` | Removes object tracking from the HSRP group. |
+| **Show tracked objects:**<br>`#show track [<object-id>]` | Displays tracked-object state and status. |
+
+**CCNP Enterprise — IOS-XE 17.x — HSRP Text Authentication**
+
+| Command | Description |
+|---|---|
+| **Configure text authentication:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> authentication text <string>` | Configures plaintext HSRP authentication for the group. |
+
+**CCNP Enterprise — IOS-XE 17.x — HSRP MD5 Key-String Authentication**
+
+| Command | Description |
+|---|---|
+| **Configure MD5 key string:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> authentication md5 key-string [0|7] <key> [timeout <seconds>]` | Configures HSRP MD5 authentication using a direct key string. |
+
+**CCNP Enterprise — IOS-XE 17.x — HSRP MD5 Key-Chain Authentication**
+
+| Command | Description |
+|---|---|
+| **Create key chain:**<br>`(config)#key chain <key-chain-name>` | Creates a key chain for HSRP authentication. |
+| **Create key:**<br>`(config-keychain)#key <key-id>`<br>&nbsp;&nbsp;○ `(config-keychain-key)#key-string <key-string>` | Creates a key and assigns its authentication string. |
+| **Apply MD5 key chain:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> authentication md5 key-chain <key-chain-name>` | Applies the configured MD5 key chain to HSRP. |
+| **Show key chains:**<br>`#show key chain` | Displays configured key-chain and key information. |
+
+**CCNP Enterprise — IOS-XE 17.x — HSRP for IPv6**
+
+| Command | Description |
+|---|---|
+| **Enable IPv6 forwarding:**<br>`(config)#ipv6 unicast-routing` | Enables IPv6 unicast routing required for HSRP IPv6. |
+| **Enable HSRPv2:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby version 2` | Enables HSRPv2 required for IPv6 HSRP operation. |
+| **Autoconfigure virtual link-local address:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> ipv6 autoconfig` | Activates IPv6 HSRP with an autogenerated link-local address. |
+| **Set virtual link-local address:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> ipv6 <link-local-address>` | Activates IPv6 HSRP with a specified link-local address. |
+| **Set IPv6 HSRP priority:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> priority <priority>` | Sets the IPv6 HSRP election priority. |
+| **Enable IPv6 HSRP preemption:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#standby <group-id> preempt` | Enables preemption for the IPv6 HSRP group. |
+| **Verify IPv6 interface:**<br>`#show ipv6 interface <interface-type> <interface-number>` | Displays IPv6 interface addressing and operational state. |
+
+**CCNP Enterprise — IOS-XE 17.x — HSRP Verification**
+
+| Command | Description |
+|---|---|
+| **Show HSRP state:**<br>`#show standby` | Displays detailed state for configured HSRP groups. |
+| **Show HSRP summary:**<br>`#show standby brief` | Displays summarized HSRP group and role information. |
+| **Show all HSRP groups:**<br>`#show standby all` | Displays configured and learned HSRP groups. |
+| **Show interface HSRP state:**<br>`#show standby <interface-type> <interface-number>` | Displays HSRP information for the selected interface. |
+| **Show specific HSRP group:**<br>`#show standby <interface-type> <interface-number> <group-id>` | Displays HSRP information for one interface group. |
+| **Show specific group summary:**<br>`#show standby <interface-type> <interface-number> <group-id> brief` | Displays summarized state for one HSRP group. |
+
+
 ```
