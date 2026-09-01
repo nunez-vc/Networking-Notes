@@ -1130,4 +1130,200 @@ Core Troubleshooting
 = Reachability → TCP 179 → Established → Policy → NEXT_HOP → Best Path → RIB → Advertisement
 ```
 
+**CCNA Configuration:** Not applicable — BGP configuration is outside current CCNA 200-301 v2.0 scope.
+
+## CCNP Configuration
+
+**IOS-XE — CCNP Enterprise (ENCOR v1.2) — Direct eBGP**
+
+| Command | Description |
+|---|---|
+| **Create BGP process:**<br>`(config)#router bgp <local-asn>` | Creates the local BGP routing process. |
+| **Set BGP router ID:**<br>`(config-router)#bgp router-id <ipv4-address>` | Sets the BGP router identifier. |
+| **Configure directly connected eBGP peer:**<br>`(config-router)#neighbor <peer-ip> remote-as <remote-asn>` | Defines the directly connected external BGP peer. |
+| **Enter IPv4 unicast AF:**<br>`(config-router)#address-family ipv4 [unicast]` | Enters the IPv4 unicast address family. |
+| **Activate IPv4 peer:**<br>`(config-router-af)#neighbor <peer-ip> activate` | Activates the peer for IPv4 unicast. |
+| **Advertise IPv4 prefix:**<br>`(config-router-af)#network <network> mask <subnet-mask>` | Injects an exact RIB prefix into BGP. |
+| **Verify eBGP summary:**<br>`#show bgp ipv4 unicast summary` | Displays IPv4 BGP peer state and prefix counts. |
+| **Verify eBGP peer:**<br>`#show bgp ipv4 unicast neighbors <peer-ip>` | Displays detailed BGP neighbor state and capabilities. |
+| **Verify BGP table:**<br>`#show bgp ipv4 unicast` | Displays the IPv4 BGP Loc-RIB. |
+| **Verify best path:**<br>`#show bgp ipv4 unicast <prefix> best-path-reason` | Displays path-selection reasons for the specified prefix. |
+
+**IOS-XE — CCNP Enterprise (ENARSI v1.1) — Neighbor Sessions**
+
+| Command | Description |
+|---|---|
+| **Configure iBGP peer:**<br>`(config-router)#neighbor <peer-ip> remote-as <local-asn>` | Defines an internal BGP peer. |
+| **Set neighbor source interface:**<br>`(config-router)#neighbor <peer-ip> update-source <interface-id>` | Sources the BGP session from the specified interface. |
+| **Set iBGP next hop to self:**<br>`(config-router)#address-family ipv4 unicast`<br>&nbsp;&nbsp;○ `(config-router-af)#neighbor <peer-ip> next-hop-self` | Advertises the local router as BGP next hop. |
+| **Enable multihop eBGP:**<br>`(config-router)#neighbor <peer-ip> ebgp-multihop [<ttl>]` | Permits eBGP peering beyond directly connected neighbors. |
+| **Configure neighbor authentication:**<br>`(config-router)#neighbor <peer-ip> password [0\|7] <password>` | Configures MD5 authentication for the BGP TCP session. |
+| **Set neighbor timers:**<br>`(config-router)#neighbor <peer-ip> timers <keepalive-seconds> <holdtime-seconds>` | Sets per-neighbor BGP keepalive and hold timers. |
+| **Set global BGP timers:**<br>`(config-router)#timers bgp <keepalive-seconds> <holdtime-seconds>` | Sets default BGP timers for all neighbors. |
+| **Log neighbor changes:**<br>`(config-router)#bgp log-neighbor-changes` | Logs BGP neighbor up and down events. |
+| **Administratively disable peer:**<br>`(config-router)#neighbor <peer-ip> shutdown` | Administratively shuts down the BGP neighbor session. |
+| **Re-enable peer:**<br>`(config-router)#no neighbor <peer-ip> shutdown` | Removes the administrative neighbor shutdown. |
+| **Limit received prefixes:**<br>`(config-router-af)#neighbor <peer-ip> maximum-prefix <maximum> [<threshold>] [restart <minutes>] [warning-only]` | Configures a maximum received-prefix threshold. |
+
+**IOS-XE — CCNP Enterprise (ENARSI v1.1) — Four-Byte ASNs**
+
+| Command | Description |
+|---|---|
+| **Use asdot display format:**<br>`(config-router)#bgp asnotation dot` | Displays four-byte ASNs using asdot notation. |
+| **Restore asplain display format:**<br>`(config-router)#no bgp asnotation dot` | Restores four-byte ASN output to asplain notation. |
+| **Match AS path by regex:**<br>`#show ip bgp regexp <regular-expression>` | Displays BGP routes matching an AS-path expression. |
+
+**IOS-XE — CCNP Enterprise (ENARSI v1.1) — MP-BGP Address Families**
+
+| Command | Description |
+|---|---|
+| **Disable automatic IPv4 activation:**<br>`(config-router)#no bgp default ipv4-unicast` | Requires explicit address-family activation for configured peers. |
+| **Enter IPv4 unicast AF:**<br>`(config-router)#address-family ipv4 [unicast]` | Enters the IPv4 unicast address family. |
+| **Activate IPv4 peer:**<br>`(config-router-af)#neighbor <peer-ip> activate` | Activates the peer for IPv4 unicast. |
+| **Enter IPv6 unicast AF:**<br>`(config-router)#address-family ipv6 [unicast]` | Enters the IPv6 unicast address family. |
+| **Activate IPv6 peer:**<br>`(config-router-af)#neighbor <peer-ipv6> activate` | Activates the peer for IPv6 unicast. |
+| **Advertise IPv4 prefix:**<br>`(config-router-af)#network <network> mask <subnet-mask> [route-map <route-map-name>]` | Advertises an exact IPv4 RIB prefix. |
+| **Advertise IPv6 prefix:**<br>`(config-router-af)#network <ipv6-prefix>/<prefix-length> [route-map <route-map-name>]` | Advertises an exact IPv6 RIB prefix. |
+
+**IOS-XE — CCNP Enterprise (ENARSI v1.1) — VRF-Lite BGP**
+
+| Command | Description |
+|---|---|
+| **Enter IPv4 VRF address family:**<br>`(config-router)#address-family ipv4 vrf <vrf-name>` | Enters the BGP IPv4 address family for a VRF. |
+| **Configure VRF BGP peer:**<br>`(config-router)#address-family ipv4 vrf <vrf-name>`<br>&nbsp;&nbsp;○ `(config-router-af)#neighbor <peer-ip> remote-as <remote-asn>`<br>&nbsp;&nbsp;○ `(config-router-af)#neighbor <peer-ip> activate` | Defines and activates a BGP peer inside the VRF. |
+| **Advertise VRF IPv4 prefix:**<br>`(config-router-af)#network <network> mask <subnet-mask>` | Advertises a VRF RIB prefix into BGP. |
+
+**IOS-XE — CCNP Enterprise (ENARSI v1.1) — Route Origination**
+
+| Command | Description |
+|---|---|
+| **Advertise IPv4 network:**<br>`(config-router-af)#network <network> mask <subnet-mask> [route-map <route-map-name>]` | Originates an exact IPv4 RIB prefix. |
+| **Advertise IPv6 network:**<br>`(config-router-af)#network <ipv6-prefix>/<prefix-length> [route-map <route-map-name>]` | Originates an exact IPv6 RIB prefix. |
+| **Redistribute connected routes:**<br>`(config-router-af)#redistribute connected [route-map <route-map-name>]` | Redistributes connected routes into the address family. |
+| **Redistribute static routes:**<br>`(config-router-af)#redistribute static [route-map <route-map-name>]` | Redistributes static routes into the address family. |
+| **Redistribute OSPF routes:**<br>`(config-router-af)#redistribute ospf <process-id> [route-map <route-map-name>]` | Redistributes OSPF routes into the address family. |
+| **Originate default toward peer:**<br>`(config-router-af)#neighbor <peer-ip> default-originate [route-map <route-map-name>]` | Advertises a default route to the specified peer. |
+
+**IOS-XE — CCNP Enterprise (ENARSI v1.1) — BGP Aggregation**
+
+| Command | Description |
+|---|---|
+| **Create IPv4 aggregate:**<br>`(config-router-af)#aggregate-address <network> <subnet-mask>` | Creates an IPv4 BGP aggregate from component routes. |
+| **Suppress IPv4 component routes:**<br>`(config-router-af)#aggregate-address <network> <subnet-mask> summary-only` | Advertises only the IPv4 aggregate route. |
+| **Preserve IPv4 AS path set:**<br>`(config-router-af)#aggregate-address <network> <subnet-mask> as-set [summary-only]` | Preserves component AS information in the aggregate. |
+| **Create IPv6 aggregate:**<br>`(config-router-af)#aggregate-address <ipv6-prefix>/<prefix-length>` | Creates an IPv6 BGP aggregate from component routes. |
+| **Suppress IPv6 component routes:**<br>`(config-router-af)#aggregate-address <ipv6-prefix>/<prefix-length> summary-only` | Advertises only the IPv6 aggregate route. |
+| **Preserve IPv6 AS path set:**<br>`(config-router-af)#aggregate-address <ipv6-prefix>/<prefix-length> as-set [summary-only]` | Preserves component AS information in the IPv6 aggregate. |
+
+**IOS-XE — CCNP Enterprise (ENARSI v1.1) — Peer Groups**
+
+| Command | Description |
+|---|---|
+| **Create peer group:**<br>`(config-router)#neighbor <peer-group-name> peer-group` | Creates a reusable BGP peer group. |
+| **Set peer-group remote AS:**<br>`(config-router)#neighbor <peer-group-name> remote-as <remote-asn>` | Assigns the remote ASN to the peer group. |
+| **Assign neighbor to peer group:**<br>`(config-router)#neighbor <peer-ip> peer-group <peer-group-name>` | Adds the BGP neighbor to the peer group. |
+| **Activate peer group:**<br>`(config-router-af)#neighbor <peer-group-name> activate` | Activates the peer group for the address family. |
+
+**IOS-XE — CCNP Enterprise (ENARSI v1.1) — Route Reflector**
+
+| Command | Description |
+|---|---|
+| **Configure route-reflector client:**<br>`(config-router)#address-family ipv4 unicast`<br>&nbsp;&nbsp;○ `(config-router-af)#neighbor <peer-ip> route-reflector-client` | Marks the iBGP neighbor as a route-reflector client. |
+| **Set route-reflector cluster ID:**<br>`(config-router)#bgp cluster-id <cluster-id>` | Configures the BGP route-reflector cluster identifier. |
+
+**IOS-XE — CCNP Enterprise (ENARSI v1.1) — Prefix Filtering**
+
+| Command | Description |
+|---|---|
+| **Create IPv4 prefix list:**<br>`(config)#ip prefix-list <list-name> [seq <sequence>] {permit\|deny} <prefix>/<length> [ge <length>] [le <length>]` | Creates an IPv4 prefix-filter entry. |
+| **Create IPv6 prefix list:**<br>`(config)#ipv6 prefix-list <list-name> [seq <sequence>] {permit\|deny} <prefix>/<length> [ge <length>] [le <length>]` | Creates an IPv6 prefix-filter entry. |
+| **Apply prefix list to neighbor:**<br>`(config-router-af)#neighbor <peer-ip> prefix-list <list-name> {in\|out}` | Filters BGP prefixes for the specified neighbor. |
+| **Apply distribute list:**<br>`(config-router-af)#neighbor <peer-ip> distribute-list {<acl-number>\|<acl-name>} {in\|out}` | Filters neighbor routes using an access list. |
+| **Verify IPv4 prefix list:**<br>`#show ip prefix-list [<list-name>]` | Displays IPv4 prefix-list entries and counters. |
+| **Verify IPv6 prefix list:**<br>`#show ipv6 prefix-list [<list-name>]` | Displays IPv6 prefix-list entries and counters. |
+
+**IOS-XE — CCNP Enterprise (ENARSI v1.1) — AS-Path Filtering**
+
+| Command | Description |
+|---|---|
+| **Create AS-path ACL:**<br>`(config)#ip as-path access-list <acl-number> {permit\|deny} <regular-expression>` | Creates an AS-path regular-expression filter. |
+| **Apply AS-path filter:**<br>`(config-router-af)#neighbor <peer-ip> filter-list <acl-number> {in\|out}` | Applies the AS-path filter to neighbor updates. |
+| **Verify AS-path matches:**<br>`#show ip bgp regexp <regular-expression>` | Displays BGP routes matching the AS-path expression. |
+
+**IOS-XE — CCNP Enterprise (ENARSI v1.1) — Route Maps**
+
+| Command | Description |
+|---|---|
+| **Create route-map sequence:**<br>`(config)#route-map <route-map-name> {permit\|deny} [<sequence>]` | Creates a route-map sequence. |
+| **Match IPv4 prefix list:**<br>`(config-route-map)#match ip address prefix-list <list-name>` | Matches routes permitted by an IPv4 prefix list. |
+| **Match AS path:**<br>`(config-route-map)#match as-path <acl-number>` | Matches routes permitted by an AS-path ACL. |
+| **Match BGP community:**<br>`(config-route-map)#match community <community-list> [exact]` | Matches routes by BGP community values. |
+| **Apply inbound route map:**<br>`(config-router-af)#neighbor <peer-ip> route-map <route-map-name> in` | Applies a route map to received BGP updates. |
+| **Apply outbound route map:**<br>`(config-router-af)#neighbor <peer-ip> route-map <route-map-name> out` | Applies a route map to advertised BGP updates. |
+| **Verify route map:**<br>`#show route-map [<route-map-name>]` | Displays route-map configuration and match counters. |
+
+**IOS-XE — CCNP Enterprise (ENARSI v1.1) — Path Attribute Manipulation**
+
+| Command | Description |
+|---|---|
+| **Set BGP weight:**<br>`(config-route-map)#set weight <0-65535>` | Sets Cisco-local BGP weight for matched routes. |
+| **Set local preference:**<br>`(config-route-map)#set local-preference <value>` | Sets BGP local preference for matched routes. |
+| **Prepend AS path:**<br>`(config-route-map)#set as-path prepend <asn> [<asn> ...]` | Prepends AS numbers to matched route advertisements. |
+| **Set MED:**<br>`(config-route-map)#set metric <value>` | Sets BGP MED for matched routes. |
+| **Set origin attribute:**<br>`(config-route-map)#set origin {igp\|egp <asn>\|incomplete}` | Sets the BGP origin attribute. |
+| **Set BGP community:**<br>`(config-route-map)#set community <community> [additive]` | Sets or appends a BGP community value. |
+
+**IOS-XE — CCNP Enterprise (ENARSI v1.1) — BGP Communities**
+
+| Command | Description |
+|---|---|
+| **Use new community format:**<br>`(config)#ip bgp-community new-format` | Displays standard communities in ASN:value format. |
+| **Send standard communities:**<br>`(config-router-af)#neighbor <peer-ip> send-community [standard]` | Sends standard BGP communities to the peer. |
+| **Send extended communities:**<br>`(config-router-af)#neighbor <peer-ip> send-community extended` | Sends extended BGP communities to the peer. |
+| **Send both community types:**<br>`(config-router-af)#neighbor <peer-ip> send-community both` | Sends standard and extended communities. |
+| **Create standard community list:**<br>`(config)#ip community-list standard <list-name> {permit\|deny} <community>` | Creates a named standard BGP community list. |
+| **Create expanded community list:**<br>`(config)#ip community-list expanded <list-name> {permit\|deny} <regular-expression>` | Creates a named regex-based community list. |
+| **Match community in route map:**<br>`(config-route-map)#match community <community-list> [exact]` | Matches routes using the configured community list. |
+| **Set community in route map:**<br>`(config-route-map)#set community <community> [additive]` | Sets or appends communities on matched routes. |
+| **Verify community list:**<br>`#show ip community-list [<community-list>]` | Displays configured BGP community lists. |
+| **Verify routes by community:**<br>`#show bgp ipv4 unicast community <community>` | Displays IPv4 BGP routes containing the community. |
+
+**IOS-XE — CCNP Enterprise (ENARSI v1.1) — Private AS Handling**
+
+| Command | Description |
+|---|---|
+| **Remove private ASNs:**<br>`(config-router-af)#neighbor <peer-ip> remove-private-as` | Removes eligible private ASNs from outbound eBGP updates. |
+| **Remove all private ASNs:**<br>`(config-router-af)#neighbor <peer-ip> remove-private-as all` | Removes all private ASNs from outbound eBGP updates. |
+| **Replace removed private ASNs:**<br>`(config-router-af)#neighbor <peer-ip> remove-private-as all replace-as` | Replaces removed private ASNs with the local ASN. |
+
+**IOS-XE — CCNP Enterprise (ENARSI v1.1) — Route Refresh and Session Reset**
+
+| Command | Description |
+|---|---|
+| **Soft-refresh IPv4 inbound routes:**<br>`#clear bgp ipv4 unicast <peer-ip> soft in` | Reprocesses inbound IPv4 routes without resetting the session. |
+| **Soft-refresh IPv4 outbound routes:**<br>`#clear bgp ipv4 unicast <peer-ip> soft out` | Reprocesses outbound IPv4 routes without resetting the session. |
+| **Soft-refresh IPv6 inbound routes:**<br>`#clear bgp ipv6 unicast <peer-ipv6> soft in` | Reprocesses inbound IPv6 routes without resetting the session. |
+| **Soft-refresh IPv6 outbound routes:**<br>`#clear bgp ipv6 unicast <peer-ipv6> soft out` | Reprocesses outbound IPv6 routes without resetting the session. |
+| **Hard-reset one IPv4 peer:**<br>`#clear ip bgp <peer-ip>` | Resets the selected BGP session and relearns routes. |
+| **Hard-reset all IPv4 peers:**<br>`#clear ip bgp *` | Resets all IPv4 BGP sessions. |
+
+**IOS-XE — CCNP Enterprise (ENCOR v1.2 / ENARSI v1.1) — Verification**
+
+| Command | Description |
+|---|---|
+| **Show IPv4 BGP summary:**<br>`#show bgp ipv4 unicast summary` | Displays IPv4 peer state and received-prefix counts. |
+| **Show IPv6 BGP summary:**<br>`#show bgp ipv6 unicast summary` | Displays IPv6 peer state and received-prefix counts. |
+| **Show IPv4 neighbor details:**<br>`#show bgp ipv4 unicast neighbors <peer-ip>` | Displays IPv4 neighbor state, timers, and capabilities. |
+| **Show IPv6 neighbor details:**<br>`#show bgp ipv6 unicast neighbors <peer-ipv6>` | Displays IPv6 neighbor state, timers, and capabilities. |
+| **Show IPv4 BGP table:**<br>`#show bgp ipv4 unicast` | Displays all IPv4 BGP Loc-RIB entries. |
+| **Show IPv6 BGP table:**<br>`#show bgp ipv6 unicast` | Displays all IPv6 BGP Loc-RIB entries. |
+| **Show one IPv4 prefix:**<br>`#show bgp ipv4 unicast <prefix>` | Displays all BGP paths for one IPv4 prefix. |
+| **Show selected best path:**<br>`#show bgp ipv4 unicast <prefix> bestpath` | Displays only the selected best BGP path. |
+| **Show best-path reason:**<br>`#show bgp ipv4 unicast <prefix> best-path-reason` | Displays selection reasons for all candidate paths. |
+| **Show advertised routes:**<br>`#show bgp ipv4 unicast neighbors <peer-ip> advertised-routes` | Displays routes advertised to the specified IPv4 peer. |
+| **Show BGP IPv4 RIB routes:**<br>`#show ip route bgp` | Displays IPv4 routes installed from BGP. |
+| **Show BGP IPv6 RIB routes:**<br>`#show ipv6 route bgp` | Displays IPv6 routes installed from BGP. |
+| **Show BGP configuration:**<br>`#show running-config \| section router bgp` | Displays the configured BGP routing process. |
+
+
 </div>
