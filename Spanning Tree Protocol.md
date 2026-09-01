@@ -184,3 +184,138 @@ spanning-tree mode mst
 
 * This prevents Layer 2 forwarding loops caused by unidirectional link failures.
 * This causes a non-designated port to enter Loop Inconsistent (broken) state if it stops receiving BPDUs.
+
+## CCNA Configuration
+
+**CCNA 200-301 v1.1 — IOS-XE Rapid PVST+**
+
+| Command | Description |
+|---|---|
+| **Enable Rapid PVST+:**<br>`(config)#spanning-tree mode rapid-pvst` | Enables Rapid PVST+ as the global spanning-tree mode. |
+| **Set primary root:**<br>`(config)#spanning-tree vlan <vlan-id> root primary` | Tunes bridge priority to prefer this switch as root. |
+| **Set secondary root:**<br>`(config)#spanning-tree vlan <vlan-id> root secondary` | Tunes bridge priority to prefer this switch as backup root. |
+| **Set bridge priority:**<br>`(config)#spanning-tree vlan <vlan-id> priority <priority>` | Sets bridge priority for the specified VLAN. |
+| **Set interface cost:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#spanning-tree vlan <vlan-id> cost <cost>` | Sets STP path cost for one VLAN. |
+| **Set interface cost globally:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#spanning-tree cost <cost>` | Sets STP path cost for all applicable VLANs. |
+| **Set port priority:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#spanning-tree vlan <vlan-id> port-priority <priority>` | Sets STP port priority for one VLAN. |
+
+**CCNA 200-301 v1.1 — IOS-XE PortFast**
+
+| Command | Description |
+|---|---|
+| **Enable access-port PortFast:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#spanning-tree portfast` | Enables PortFast when the interface operates as access. |
+| **Enable trunk PortFast:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#spanning-tree portfast trunk` | Enables PortFast when the interface operates as trunk. |
+| **Disable interface PortFast:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#spanning-tree portfast disable` | Disables PortFast on the selected interface. |
+
+**CCNA 200-301 v1.1 — IOS-XE BPDU Guard**
+
+| Command | Description |
+|---|---|
+| **Enable BPDU Guard:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#spanning-tree bpduguard enable` | Enables BPDU Guard unconditionally on the interface. |
+| **Disable BPDU Guard:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#spanning-tree bpduguard disable` | Disables BPDU Guard unconditionally on the interface. |
+
+**CCNA 200-301 v1.1 — IOS-XE Root Guard**
+
+| Command | Description |
+|---|---|
+| **Enable Root Guard:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#spanning-tree guard root` | Enables Root Guard on the selected interface. |
+| **Disable Root Guard:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no spanning-tree guard root` | Disables Root Guard on the selected interface. |
+
+**CCNA 200-301 v1.1 — IOS-XE Loop Guard**
+
+| Command | Description |
+|---|---|
+| **Enable Loop Guard:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#spanning-tree guard loop` | Enables Loop Guard on the selected interface. |
+| **Disable Loop Guard:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no spanning-tree guard loop` | Disables Loop Guard on the selected interface. |
+
+**CCNA 200-301 v1.1 — IOS-XE BPDU Filter**
+
+| Command | Description |
+|---|---|
+| **Enable interface BPDU Filter:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#spanning-tree bpdufilter enable` | Enables unconditional BPDU filtering on the interface. |
+| **Disable interface BPDU Filter:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#spanning-tree bpdufilter disable` | Disables interface BPDU filtering. |
+
+**CCNA 200-301 v1.1 — IOS-XE Verification**
+
+| Command | Description |
+|---|---|
+| **Show spanning-tree state:**<br>`#show spanning-tree` | Displays STP root, bridge, port roles, and states. |
+| **Show VLAN spanning tree:**<br>`#show spanning-tree vlan <vlan-id>` | Displays STP information for the specified VLAN. |
+| **Show VLAN interface state:**<br>`#show spanning-tree vlan <vlan-id> interface <interface-id>` | Displays STP state for one VLAN interface. |
+| **Show VLAN interface details:**<br>`#show spanning-tree vlan <vlan-id> interface <interface-id> detail` | Displays detailed interface STP parameters and BPDU counters. |
+| **Show interface spanning tree:**<br>`#show spanning-tree interface <interface-id>` | Displays STP state for the specified interface. |
+| **Show interface details:**<br>`#show spanning-tree interface <interface-id> detail` | Displays PortFast, guard, filter, and BPDU details. |
+
+## CCNP Configuration
+
+**CCNP Enterprise — ENCOR 350-401 v1.2 — IOS-XE STP Path-Cost Method**
+
+| Command | Description |
+|---|---|
+| **Use long path costs:**<br>`(config)#spanning-tree pathcost method long` | Selects 32-bit long STP path-cost values. |
+| **Use short path costs:**<br>`(config)#spanning-tree pathcost method short` | Selects legacy 16-bit short STP path-cost values. |
+| **Verify path-cost method:**<br>`#show spanning-tree summary` | Displays global STP mode and configured path-cost method. |
+
+**CCNP Enterprise — ENCOR 350-401 v1.2 — IOS-XE STP Timers**
+
+| Command | Description |
+|---|---|
+| **Set hello timer:**<br>`(config)#spanning-tree vlan <vlan-id> hello-time <seconds>` | Sets the STP hello interval for the VLAN. |
+| **Set maximum age:**<br>`(config)#spanning-tree vlan <vlan-id> max-age <seconds>` | Sets the STP maximum-age timer for the VLAN. |
+| **Set forward delay:**<br>`(config)#spanning-tree vlan <vlan-id> forward-time <seconds>` | Sets the STP forwarding-delay timer for the VLAN. |
+
+**CCNP Enterprise — ENCOR 350-401 v1.2 — IOS-XE Advanced Root Placement**
+
+| Command | Description |
+|---|---|
+| **Set primary root with diameter:**<br>`(config)#spanning-tree vlan <vlan-id> root primary diameter <diameter>` | Tunes root priority using the specified network diameter. |
+| **Set secondary root with diameter:**<br>`(config)#spanning-tree vlan <vlan-id> root secondary diameter <diameter>` | Tunes backup-root priority using the specified network diameter. |
+| **Show root information:**<br>`#show spanning-tree root` | Displays root bridge, root port, and root-path cost. |
+| **Show topology-change details:**<br>`#show spanning-tree vlan <vlan-id> detail` | Displays topology-change timing and originating interface information. |
+
+**CCNP Enterprise — ENCOR 350-401 v1.2 — IOS-XE MST Region Configuration**
+
+| Command | Description |
+|---|---|
+| **Enable MST mode:**<br>`(config)#spanning-tree mode mst` | Enables Multiple Spanning Tree globally. |
+| **Enter MST configuration:**<br>`(config)#spanning-tree mst configuration` | Enters MST region configuration mode. |
+| **Set region name:**<br>`(config-mst)#name <region-name>` | Sets the case-sensitive MST region name. |
+| **Set revision number:**<br>`(config-mst)#revision <revision-number>` | Sets the MST region revision number. |
+| **Map VLANs to instance:**<br>`(config-mst)#instance <instance-id> vlan <vlan-list>` | Maps specified VLANs to an MST instance. |
+| **Verify current MST config:**<br>`(config-mst)#show current` | Displays the candidate MST region configuration. |
+
+**CCNP Enterprise — ENCOR 350-401 v1.2 — IOS-XE MST Root Placement**
+
+| Command | Description |
+|---|---|
+| **Set MST primary root:**<br>`(config)#spanning-tree mst <instance-id> root primary` | Sets preferred root priority for the MST instance. |
+| **Set MST secondary root:**<br>`(config)#spanning-tree mst <instance-id> root secondary` | Sets backup-root priority for the MST instance. |
+| **Set MST instance priority:**<br>`(config)#spanning-tree mst <instance-id> priority <priority>` | Sets bridge priority for the specified MST instance. |
+
+**CCNP Enterprise — ENCOR 350-401 v1.2 — IOS-XE MST Interface Tuning**
+
+| Command | Description |
+|---|---|
+| **Set MST interface cost:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#spanning-tree mst <instance-id> cost <cost>` | Sets interface cost for the specified MST instance. |
+| **Set MST port priority:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#spanning-tree mst <instance-id> port-priority <priority>` | Sets interface priority for the specified MST instance. |
+
+**CCNP Enterprise — ENCOR 350-401 v1.2 — IOS-XE BPDU Guard Recovery**
+
+| Command | Description |
+|---|---|
+| **Enable BPDU Guard recovery:**<br>`(config)#errdisable recovery cause bpduguard` | Enables automatic recovery from BPDU Guard errdisable events. |
+| **Set recovery interval:**<br>`(config)#errdisable recovery interval <seconds>` | Sets the global errdisable automatic-recovery interval. |
+| **Verify recovery settings:**<br>`#show errdisable recovery` | Displays enabled recovery causes and configured interval. |
+
+**CCNP Enterprise — ENCOR 350-401 v1.2 — IOS-XE Advanced Verification**
+
+| Command | Description |
+|---|---|
+| **Show inconsistent ports:**<br>`#show spanning-tree inconsistentports` | Displays ports blocked by spanning-tree consistency mechanisms. |
+| **Show MST configuration:**<br>`#show spanning-tree mst configuration` | Displays MST region attributes and VLAN-to-instance mappings. |
+| **Show MST digest:**<br>`#show spanning-tree mst configuration digest` | Displays MST region configuration digest values. |
+| **Show all MST instances:**<br>`#show spanning-tree mst` | Displays consolidated state for all MST instances. |
+| **Show one MST instance:**<br>`#show spanning-tree mst <instance-id>` | Displays topology information for one MST instance. |
+| **Show MST interface:**<br>`#show spanning-tree mst interface <interface-id>` | Displays MST state and settings for one interface. |
+| **Show interface STP details:**<br>`#show spanning-tree interface <interface-id> detail` | Displays detailed guards, filters, roles, and BPDU counters. |
+
