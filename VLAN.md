@@ -228,4 +228,92 @@ Extended Range
 = 1006-4094
 ```
 
+## CCNA Configuration
+
+**VLAN Creation and Management — Cisco IOS XE**
+
+| Command | Description |
+|---|---|
+| **Create VLAN:**<br>`(config)#vlan <vlan-id>` | Creates a VLAN and enters VLAN configuration mode. |
+| **Name VLAN:**<br>`(config-vlan)#name <vlan-name>` | Assigns a descriptive name to the current VLAN. |
+| **Enable VLAN:**<br>`(config-vlan)#no shutdown` | Enables the current VLAN. |
+| **Disable VLAN:**<br>`(config-vlan)#shutdown` | Administratively disables the current VLAN. |
+| **Verify VLANs:**<br>`#show vlan brief` | Lists VLANs, status, and assigned access ports. |
+| **Verify VLAN by ID:**<br>`#show vlan id <vlan-id>` | Displays detailed information for one VLAN. |
+| **Verify VLAN by name:**<br>`#show vlan name <vlan-name>` | Displays detailed information for one named VLAN. |
+
+**Access Port VLAN Assignment — Cisco IOS XE**
+
+| Command | Description |
+|---|---|
+| **Configure access port:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#switchport mode access`<br>&nbsp;&nbsp;○ `(config-if)#switchport access vlan <vlan-id>` | Forces access mode and assigns the port to one VLAN. |
+| **Configure access port range:**<br>`(config)#interface range <interface-range>`<br>&nbsp;&nbsp;○ `(config-if-range)#switchport mode access`<br>&nbsp;&nbsp;○ `(config-if-range)#switchport access vlan <vlan-id>` | Assigns multiple access ports to the same VLAN. |
+| **Verify switchport VLAN:**<br>`#show interfaces <interface-id> switchport` | Displays administrative, operational, access, native, and voice VLAN settings. |
+| **Verify interface VLANs:**<br>`#show interfaces status` | Lists access VLANs and identifies operational trunk ports. |
+
+**Data and Voice VLANs — Cisco IOS XE**
+
+| Command | Description |
+|---|---|
+| **Configure data and voice VLANs:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#switchport mode access`<br>&nbsp;&nbsp;○ `(config-if)#switchport access vlan <data-vlan-id>`<br>&nbsp;&nbsp;○ `(config-if)#switchport voice vlan <voice-vlan-id>` | Assigns separate data and voice VLANs to one access port. |
+| **Verify voice VLAN:**<br>`#show interfaces <interface-id> switchport` | Displays configured access and voice VLAN assignments. |
+
+**802.1Q Trunk Configuration — Cisco IOS XE**
+
+| Command | Description |
+|---|---|
+| **Configure static trunk:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#switchport mode trunk` | Statically configures the interface as an 802.1Q trunk. |
+| **Set native VLAN:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#switchport trunk native vlan <vlan-id>` | Sets the native VLAN for the trunk. |
+| **Set allowed VLAN list:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#switchport trunk allowed vlan <vlan-list>` | Replaces the trunk allowed-VLAN list. |
+| **Add allowed VLANs:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#switchport trunk allowed vlan add <vlan-list>` | Adds VLANs to the existing allowed-VLAN list. |
+| **Remove allowed VLANs:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#switchport trunk allowed vlan remove <vlan-list>` | Removes VLANs from the existing allowed-VLAN list. |
+| **Set allowed VLAN policy:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#switchport trunk allowed vlan {all | none | except <vlan-list>}` | Sets all, none, or all-except VLAN trunk membership. |
+| **Verify operational trunks:**<br>`#show interfaces trunk` | Lists operational trunks, native VLANs, and allowed VLANs. |
+| **Verify one trunk:**<br>`#show interfaces <interface-id> trunk` | Displays trunking status and VLAN lists for one interface. |
+| **Verify trunk switchport:**<br>`#show interfaces <interface-id> switchport` | Displays administrative and operational trunking parameters. |
+
+**Router-on-a-Stick Inter-VLAN Routing — Cisco IOS XE Router**
+
+| Command | Description |
+|---|---|
+| **Create VLAN subinterface:**<br>`(config)#interface <physical-interface>.<subinterface-number>`<br>&nbsp;&nbsp;○ `(config-subif)#encapsulation dot1q <vlan-id>`<br>&nbsp;&nbsp;○ `(config-subif)#ip address <ip-address> <subnet-mask>` | Creates a routed 802.1Q subinterface for one VLAN. |
+| **Configure native VLAN subinterface:**<br>`(config)#interface <physical-interface>.<subinterface-number>`<br>&nbsp;&nbsp;○ `(config-subif)#encapsulation dot1q <vlan-id> native`<br>&nbsp;&nbsp;○ `(config-subif)#ip address <ip-address> <subnet-mask>` | Associates the native VLAN with a routed subinterface. |
+| **Enable parent interface:**<br>`(config)#interface <physical-interface>`<br>&nbsp;&nbsp;○ `(config-if)#no shutdown` | Enables the physical interface carrying the 802.1Q trunk. |
+| **Verify router VLANs:**<br>`#show vlans` | Displays router VLAN trunk configuration and statistics. |
+| **Verify connected routes:**<br>`#show ip route connected` | Lists connected routes created by VLAN subinterfaces. |
+
+**SVI Inter-VLAN Routing — Cisco IOS XE Layer 3 Switch**
+
+| Command | Description |
+|---|---|
+| **Create SVI:**<br>`(config)#interface vlan <vlan-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip address <ip-address> <subnet-mask>`<br>&nbsp;&nbsp;○ `(config-if)#no shutdown` | Creates and addresses a Layer 3 VLAN interface. |
+| **Enable IPv4 routing:**<br>`(config)#ip routing` | Enables IPv4 routing on the Layer 3 switch. |
+| **Verify SVI status:**<br>`#show ip interface brief` | Displays SVI addressing and line-protocol status. |
+| **Verify SVI details:**<br>`#show interfaces vlan <vlan-id>` | Displays detailed status and counters for one SVI. |
+| **Verify connected routes:**<br>`#show ip route connected` | Lists connected routes learned from active SVIs. |
+
+## CCNP Configuration
+
+**Dynamic 802.1Q Trunking — CCNP Enterprise (ENCOR) — Cisco IOS XE**
+
+| Command | Description |
+|---|---|
+| **Configure dynamic desirable:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#switchport mode dynamic desirable` | Actively negotiates trunk formation using DTP. |
+| **Configure dynamic auto:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#switchport mode dynamic auto` | Passively negotiates trunk formation using DTP. |
+| **Disable DTP on static trunk:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#switchport mode trunk`<br>&nbsp;&nbsp;○ `(config-if)#switchport nonegotiate` | Configures a static trunk and disables DTP negotiation. |
+| **Verify dynamic trunk:**<br>`#show interfaces <interface-id> trunk` | Displays configured mode and operational trunk status. |
+| **Verify DTP state:**<br>`#show interfaces <interface-id> switchport` | Displays trunk negotiation and operational switchport parameters. |
+
+**VLAN Trunking Protocol (VTP) — CCNP Enterprise (ENCOR) — Cisco IOS XE**
+
+| Command | Description |
+|---|---|
+| **Set VTP version:**<br>`(config)#vtp version {1 | 2 | 3}` | Selects the VTP protocol version. |
+| **Set VTP domain:**<br>`(config)#vtp domain <domain-name>` | Assigns the switch to a VTP domain. |
+| **Set VTP mode:**<br>`(config)#vtp mode {server | client | transparent | off}` | Configures the switch VTP operating role. |
+| **Set VTP password:**<br>`(config)#vtp password <password>` | Configures VTP domain authentication. |
+| **Set VTPv3 primary server:**<br>`#vtp primary` | Promotes the VTPv3 server to primary status. |
+| **Verify VTP:**<br>`#show vtp status` | Displays VTP version, domain, mode, VLANs, and revision. |
+
+
 </div>
