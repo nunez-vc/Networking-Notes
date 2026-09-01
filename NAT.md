@@ -503,3 +503,102 @@ NAT ≠ Routing
 NAT ≠ Firewall
 ```
 
+## CCNA Configuration
+
+**CCNA 200-301 v2.0 — IOS-XE NAT Interface Roles**
+
+| Command | Description |
+|---|---|
+| **Mark inside interface:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip nat inside` | Marks the interface as the NAT inside interface. |
+| **Mark outside interface:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#ip nat outside` | Marks the interface as the NAT outside interface. |
+| **Remove inside role:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no ip nat inside` | Removes the NAT inside designation. |
+| **Remove outside role:**<br>`(config)#interface <interface-id>`<br>&nbsp;&nbsp;○ `(config-if)#no ip nat outside` | Removes the NAT outside designation. |
+
+**CCNA 200-301 v2.0 — IOS-XE Static NAT**
+
+| Command | Description |
+|---|---|
+| **Create static inside mapping:**<br>`(config)#ip nat inside source static <inside-local-ip> <inside-global-ip>` | Creates a permanent one-to-one inside source translation. |
+| **Remove static mapping:**<br>`(config)#no ip nat inside source static <inside-local-ip> <inside-global-ip>` | Removes the specified static inside source translation. |
+| **Verify static translation:**<br>`#show ip nat translations` | Displays configured and active NAT translation entries. |
+| **Verify NAT statistics:**<br>`#show ip nat statistics` | Displays NAT roles, mappings, hits, and misses. |
+
+**CCNA 200-301 v2.0 — IOS-XE Dynamic NAT Pool**
+
+| Command | Description |
+|---|---|
+| **Create NAT pool with netmask:**<br>`(config)#ip nat pool <pool-name> <start-ip> <end-ip> netmask <subnet-mask>` | Creates a dynamic NAT pool using a subnet mask. |
+| **Create NAT pool with prefix:**<br>`(config)#ip nat pool <pool-name> <start-ip> <end-ip> prefix-length <prefix-length>` | Creates a dynamic NAT pool using prefix length. |
+| **Create standard ACL:**<br>`(config)#ip access-list standard <acl-name>`<br>&nbsp;&nbsp;○ `(config-std-nacl)#permit <source-network> <wildcard-mask>` | Matches inside local addresses eligible for translation. |
+| **Bind ACL to NAT pool:**<br>`(config)#ip nat inside source list <acl-name> pool <pool-name>` | Creates dynamic translations from the selected address pool. |
+| **Verify dynamic translations:**<br>`#show ip nat translations` | Displays active dynamic NAT translation entries. |
+| **Verify pool statistics:**<br>`#show ip nat statistics` | Displays pool allocation, hits, misses, and mappings. |
+| **Clear dynamic translations:**<br>`#clear ip nat translation *` | Clears all dynamic NAT translation entries. |
+
+**CCNA 200-301 v2.0 — IOS-XE PAT Using Interface Address**
+
+| Command | Description |
+|---|---|
+| **Create PAT ACL:**<br>`(config)#ip access-list standard <acl-name>`<br>&nbsp;&nbsp;○ `(config-std-nacl)#permit <source-network> <wildcard-mask>` | Matches inside local addresses eligible for PAT. |
+| **Configure interface PAT:**<br>`(config)#ip nat inside source list <acl-name> interface <outside-interface> overload` | Overloads translations onto the outside interface address. |
+| **Verify PAT translations:**<br>`#show ip nat translations` | Displays PAT entries with translated transport identifiers. |
+| **Verify PAT statistics:**<br>`#show ip nat statistics` | Displays NAT overload mapping and translation counters. |
+
+**CCNA 200-301 v2.0 — IOS-XE PAT Using Address Pool**
+
+| Command | Description |
+|---|---|
+| **Create PAT pool:**<br>`(config)#ip nat pool <pool-name> <start-ip> <end-ip> prefix-length <prefix-length>` | Creates the global address pool used for PAT. |
+| **Configure pooled PAT:**<br>`(config)#ip nat inside source list <acl-name> pool <pool-name> overload` | Enables PAT using addresses from the NAT pool. |
+| **Verify pooled PAT:**<br>`#show ip nat translations` | Displays active overloaded translations using pooled addresses. |
+| **Clear pooled translations:**<br>`#clear ip nat translation *` | Clears dynamic PAT translations. |
+
+## CCNP Configuration
+
+**CCNP Enterprise — ENCOR 350-401 v1.2 — IOS-XE Outside Static NAT**
+
+| Command | Description |
+|---|---|
+| **Create outside static mapping:**<br>`(config)#ip nat outside source static <outside-global-ip> <outside-local-ip>` | Creates a permanent outside source translation. |
+| **Create mapping with route:**<br>`(config)#ip nat outside source static <outside-global-ip> <outside-local-ip> add-route` | Creates outside static NAT and installs a route. |
+| **Remove outside mapping:**<br>`(config)#no ip nat outside source static <outside-global-ip> <outside-local-ip>` | Removes the specified outside static translation. |
+| **Verify outside translation:**<br>`#show ip nat translations` | Displays outside global and outside local mappings. |
+
+**CCNP Enterprise — ENCOR 350-401 v1.2 — IOS-XE NAT Timeout**
+
+| Command | Description |
+|---|---|
+| **Set translation timeout:**<br>`(config)#ip nat translation timeout <seconds>` | Sets the inactivity timeout for dynamic NAT translations. |
+| **Restore default timeout:**<br>`(config)#no ip nat translation timeout` | Restores the platform default NAT translation timeout. |
+| **Verify translation state:**<br>`#show ip nat translations` | Displays active translations subject to configured timeouts. |
+| **Verify NAT counters:**<br>`#show ip nat statistics` | Displays active, expired, hit, and miss statistics. |
+
+**CCNP Enterprise — ENCOR 350-401 v1.2 — IOS-XE NAT Maintenance**
+
+| Command | Description |
+|---|---|
+| **Clear all dynamic translations:**<br>`#clear ip nat translation *` | Clears all dynamic NAT translation entries. |
+| **Clear address translation:**<br>`#clear ip nat translation <ip-address>` | Clears dynamic translations associated with the specified address. |
+| **Show translation table:**<br>`#show ip nat translations` | Displays current static and dynamic translation entries. |
+| **Show NAT statistics:**<br>`#show ip nat statistics` | Displays NAT mappings, interfaces, counters, and pool usage. |
+
+**CCNP Security — SNCF 300-710 — Secure Firewall Threat Defense NAT Verification**
+
+| Command | Description |
+|---|---|
+| **Show deployed NAT configuration:**<br>`> show running-config nat` | Displays deployed NAT policy syntax on Threat Defense. |
+| **Show referenced network objects:**<br>`> show running-config object` | Displays objects referenced by deployed NAT rules. |
+| **Show NAT rule details:**<br>`> show nat detail` | Displays NAT sections, priorities, types, and hit counters. |
+| **Show translation table:**<br>`> show xlate` | Displays active Threat Defense translation slots. |
+| **Show detailed translations:**<br>`> show xlate detail` | Displays detailed translation flags, timers, and mappings. |
+| **Clear translations:**<br>`> clear xlate` | Clears active translations; FMC-managed policy remains unchanged. |
+| **Show interface names:**<br>`> show nameif` | Displays physical interfaces and logical interface names. |
+| **Show interface addressing:**<br>`> show interface ip brief` | Displays interface addressing and operational status. |
+
+**CCNP Security — SNCF 300-710 — Secure Firewall Threat Defense NAT Trace**
+
+| Command | Description |
+|---|---|
+| **Capture traced traffic:**<br>`> capture <capture-name> trace interface <nameif> match <protocol> <source> <destination> [eq <port>]` | Captures matching traffic with packet-processing trace data. |
+| **Show capture list:**<br>`> show capture` | Displays configured packet captures and capture status. |
+| **Trace captured packet:**<br>`> show capture <capture-name> packet-number <number> trace` | Displays processing phases including NAT decisions. |
