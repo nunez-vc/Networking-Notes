@@ -1197,4 +1197,183 @@ Core Troubleshooting
 = Underlay → IKE → IPsec SA → Routing → NAT → Policy → Return Path → MTU
 ```
 
+## CCNA Configuration
+
+VPN configuration is outside current CCNA 200-301 configuration scope.
+
+## CCNP Configuration
+
+**CCNP Enterprise — IOS-XE — GRE over IPsec (IKEv1 Pre-Shared Key)**
+
+| Command | Description |
+|---|---|
+| **Create crypto ACL:**<br>`(config)#ip access-list extended <acl-name>`<br>&nbsp;&nbsp;○ `(config-ext-nacl)#permit gre host <local-public-ip> host <remote-public-ip>` | Matches GRE traffic protected by the IPsec crypto map. |
+| **Create ISAKMP policy:**<br>`(config)#crypto isakmp policy <priority>` | Enters IKEv1 ISAKMP policy configuration mode. |
+| **Set IKE encryption:**<br>`(config-isakmp)#encryption <des|3des|aes|aes 192|aes 256>` | Sets IKEv1 Phase 1 encryption algorithm. |
+| **Set IKE hash:**<br>`(config-isakmp)#hash <sha|sha256|sha384|md5>` | Sets IKEv1 Phase 1 integrity algorithm. |
+| **Set IKE authentication:**<br>`(config-isakmp)#authentication pre-share` | Selects pre-shared-key peer authentication. |
+| **Set Diffie-Hellman group:**<br>`(config-isakmp)#group <1|2|5|14|15|16|19|20|24>` | Sets the IKEv1 Diffie-Hellman group. |
+| **Configure peer pre-shared key:**<br>`(config)#crypto isakmp key <key-string> address <peer-ip> [<mask>]` | Associates a pre-shared key with the remote peer. |
+| **Create IPsec transform set:**<br>`(config)#crypto ipsec transform-set <transform-set-name> <transform1> [<transform2> [<transform3>]]` | Creates the IPsec Phase 2 transform set. |
+| **Set transport mode:**<br>`(cfg-crypto-trans)#mode transport` | Sets IPsec transport mode for GRE protection. |
+| **Create crypto map:**<br>`(config)#crypto map <map-name> <sequence> ipsec-isakmp` | Creates an IPsec crypto-map entry. |
+| **Match crypto ACL:**<br>`(config-crypto-map)#match address <acl-name>` | Associates interesting traffic with the crypto-map entry. |
+| **Set VPN peer:**<br>`(config-crypto-map)#set peer <peer-ip>` | Assigns the remote IPsec peer. |
+| **Set transform set:**<br>`(config-crypto-map)#set transform-set <transform-set-name>` | Associates the IPsec transform set with the crypto map. |
+| **Apply crypto map:**<br>`(config)#interface <outside-interface>`<br>&nbsp;&nbsp;○ `(config-if)#crypto map <map-name>` | Applies the crypto map to the outside interface. |
+| **Create GRE tunnel:**<br>`(config)#interface Tunnel<tunnel-number>`<br>&nbsp;&nbsp;○ `(config-if)#ip address <tunnel-ip> <subnet-mask>`<br>&nbsp;&nbsp;○ `(config-if)#tunnel source <source-interface|source-ip>`<br>&nbsp;&nbsp;○ `(config-if)#tunnel destination <peer-public-ip>` | Creates the GRE tunnel protected by IPsec. |
+
+**CCNP Enterprise — IOS-XE — GRE over IPsec Using IPsec Profile**
+
+| Command | Description |
+|---|---|
+| **Create transport transform set:**<br>`(config)#crypto ipsec transform-set <transform-set-name> <transform1> [<transform2>]`<br>&nbsp;&nbsp;○ `(cfg-crypto-trans)#mode transport` | Creates a transport-mode transform set for GRE. |
+| **Create IPsec profile:**<br>`(config)#crypto ipsec profile <profile-name>` | Enters IPsec profile configuration mode. |
+| **Attach transform set:**<br>`(ipsec-profile)#set transform-set <transform-set-name>` | Associates the transform set with the IPsec profile. |
+| **Protect GRE tunnel:**<br>`(config)#interface Tunnel<tunnel-number>`<br>&nbsp;&nbsp;○ `(config-if)#tunnel protection ipsec profile <profile-name>` | Applies IPsec protection directly to the GRE tunnel. |
+
+**CCNP Enterprise — IOS-XE — Static VTI over IPsec**
+
+| Command | Description |
+|---|---|
+| **Create tunnel-mode transform set:**<br>`(config)#crypto ipsec transform-set <transform-set-name> <transform1> [<transform2>]`<br>&nbsp;&nbsp;○ `(cfg-crypto-trans)#mode tunnel` | Creates a tunnel-mode transform set for VTI. |
+| **Create IPsec profile:**<br>`(config)#crypto ipsec profile <profile-name>`<br>&nbsp;&nbsp;○ `(ipsec-profile)#set transform-set <transform-set-name>` | Creates the IPsec profile used by the VTI. |
+| **Create static VTI:**<br>`(config)#interface Tunnel<tunnel-number>`<br>&nbsp;&nbsp;○ `(config-if)#ip address <tunnel-ip> <subnet-mask>`<br>&nbsp;&nbsp;○ `(config-if)#tunnel source <source-interface|source-ip>`<br>&nbsp;&nbsp;○ `(config-if)#tunnel destination <peer-public-ip>`<br>&nbsp;&nbsp;○ `(config-if)#tunnel mode ipsec ipv4`<br>&nbsp;&nbsp;○ `(config-if)#tunnel protection ipsec profile <profile-name>` | Creates an IPv4 static VTI protected by IPsec. |
+| **Create IPv6 VTI mode:**<br>`(config)#interface Tunnel<tunnel-number>`<br>&nbsp;&nbsp;○ `(config-if)#tunnel mode ipsec ipv6` | Sets the tunnel interface to IPv6 IPsec VTI mode. |
+
+**CCNP Enterprise — IOS-XE — Dynamic VTI**
+
+| Command | Description |
+|---|---|
+| **Create loopback source:**<br>`(config)#interface Loopback<id>`<br>&nbsp;&nbsp;○ `(config-if)#ip address <ipv4-address> 255.255.255.255` | Creates an address source for the dynamic tunnel template. |
+| **Create virtual template:**<br>`(config)#interface Virtual-Template<id> type tunnel`<br>&nbsp;&nbsp;○ `(config-if)#ip unnumbered Loopback<id>`<br>&nbsp;&nbsp;○ `(config-if)#tunnel mode ipsec ipv4`<br>&nbsp;&nbsp;○ `(config-if)#tunnel protection ipsec profile <profile-name>` | Creates a dynamic VTI template protected by IPsec. |
+
+**CCNP Enterprise / Security — IOS-XE — IKEv2 FlexVPN Peer Identity**
+
+| Command | Description |
+|---|---|
+| **Create IKEv2 keyring:**<br>`(config)#crypto ikev2 keyring <keyring-name>` | Creates the IKEv2 peer keyring. |
+| **Create keyring peer:**<br>`(config-ikev2-keyring)#peer <peer-name>`<br>&nbsp;&nbsp;○ `(config-ikev2-keyring-peer)#address <peer-ip>`<br>&nbsp;&nbsp;○ `(config-ikev2-keyring-peer)#pre-shared-key <key-string>` | Defines the peer address and pre-shared key. |
+| **Create IKEv2 profile:**<br>`(config)#crypto ikev2 profile <profile-name>` | Enters IKEv2 profile configuration mode. |
+| **Match remote FQDN:**<br>`(config-ikev2-profile)#match identity remote fqdn <remote-fqdn>` | Matches the remote peer identity by FQDN. |
+| **Set local FQDN:**<br>`(config-ikev2-profile)#identity local fqdn <local-fqdn>` | Sets the local IKEv2 FQDN identity. |
+| **Set local authentication:**<br>`(config-ikev2-profile)#authentication local pre-share` | Selects local pre-shared-key authentication. |
+| **Set remote authentication:**<br>`(config-ikev2-profile)#authentication remote pre-share` | Selects remote pre-shared-key authentication. |
+| **Attach local keyring:**<br>`(config-ikev2-profile)#keyring local <keyring-name>` | Associates the local IKEv2 keyring with the profile. |
+
+**CCNP Enterprise / Security — IOS-XE — VPN Verification**
+
+| Command | Description |
+|---|---|
+| **Show IKEv1 SAs:**<br>`#show crypto isakmp sa` | Displays active IKEv1 security associations. |
+| **Show IKEv2 SAs:**<br>`#show crypto ikev2 sa detailed` | Displays detailed IKEv2 security-association information. |
+| **Show IKEv2 sessions:**<br>`#show crypto ikev2 session` | Displays active IKEv2 sessions and child SAs. |
+| **Show detailed IKEv2 sessions:**<br>`#show crypto ikev2 session detailed` | Displays detailed IKEv2 session information. |
+| **Show IPsec SAs:**<br>`#show crypto ipsec sa` | Displays IPsec security associations and packet counters. |
+| **Show tunnel interface:**<br>`#show interface Tunnel<tunnel-number>` | Displays tunnel state, protocol, addressing, and counters. |
+| **Show IKEv2 statistics:**<br>`#show crypto ikev2 stats` | Displays IKEv2 protocol statistics and counters. |
+| **Show IKEv2 event errors:**<br>`#show monitor event-trace crypto ikev2 error all` | Displays recorded IKEv2 error events. |
+| **Show IPsec event trace:**<br>`#show monitor event-trace crypto ipsec` | Displays recorded IPsec event-trace information. |
+
+**CCNP Security — ASA 9.x — Site-to-Site IKEv2 Policy**
+
+| Command | Description |
+|---|---|
+| **Enable IKEv2:**<br>`(config)#crypto ikev2 enable <interface-name>` | Enables IKEv2 negotiation on the selected ASA interface. |
+| **Create IKEv2 policy:**<br>`(config)#crypto ikev2 policy <priority>` | Enters ASA IKEv2 policy configuration mode. |
+| **Set encryption:**<br>`(config-ikev2-policy)#encryption <algorithm>` | Sets IKEv2 encryption algorithm. |
+| **Set integrity:**<br>`(config-ikev2-policy)#integrity <algorithm>` | Sets IKEv2 integrity algorithm. |
+| **Set DH group:**<br>`(config-ikev2-policy)#group <dh-group>` | Sets IKEv2 Diffie-Hellman group. |
+| **Set PRF:**<br>`(config-ikev2-policy)#prf <algorithm>` | Sets the IKEv2 pseudo-random function. |
+| **Set IKE lifetime:**<br>`(config-ikev2-policy)#lifetime seconds <seconds>` | Sets the IKEv2 security-association lifetime. |
+
+**CCNP Security — ASA 9.x — Site-to-Site Peer Authentication**
+
+| Command | Description |
+|---|---|
+| **Create L2L tunnel group:**<br>`(config)#tunnel-group <peer-ip> type ipsec-l2l` | Creates a LAN-to-LAN IPsec connection profile. |
+| **Enter IPsec attributes:**<br>`(config)#tunnel-group <peer-ip> ipsec-attributes` | Enters tunnel-group IPsec attribute configuration mode. |
+| **Set remote pre-shared key:**<br>`(config-tunnel-ipsec)#ikev2 remote-authentication pre-shared-key <key-string>` | Configures the remote IKEv2 authentication key. |
+| **Set local pre-shared key:**<br>`(config-tunnel-ipsec)#ikev2 local-authentication pre-shared-key <key-string>` | Configures the local IKEv2 authentication key. |
+
+**CCNP Security — ASA 9.x — Site-to-Site IPsec Proposal**
+
+| Command | Description |
+|---|---|
+| **Create IKEv2 IPsec proposal:**<br>`(config)#crypto ipsec ikev2 ipsec-proposal <proposal-name>` | Enters ASA IKEv2 IPsec proposal configuration mode. |
+| **Set ESP encryption:**<br>`(config-ipsec-proposal)#protocol esp encryption <algorithm>` | Sets ESP encryption for the proposal. |
+| **Set ESP integrity:**<br>`(config-ipsec-proposal)#protocol esp integrity <algorithm>` | Sets ESP integrity for the proposal. |
+
+**CCNP Security — ASA 9.x — Site-to-Site Crypto Map**
+
+| Command | Description |
+|---|---|
+| **Create crypto ACL:**<br>`(config)#access-list <acl-name> extended permit ip <local-network> <local-mask> <remote-network> <remote-mask>` | Defines protected traffic for the site-to-site VPN. |
+| **Match crypto ACL:**<br>`(config)#crypto map <map-name> <sequence> match address <acl-name>` | Associates protected traffic with the crypto-map entry. |
+| **Set VPN peer:**<br>`(config)#crypto map <map-name> <sequence> set peer <peer-ip>` | Assigns the remote site-to-site VPN peer. |
+| **Set IKEv2 proposal:**<br>`(config)#crypto map <map-name> <sequence> set ikev2 ipsec-proposal <proposal-name>` | Associates the IKEv2 IPsec proposal with the peer. |
+| **Enable PFS:**<br>`(config)#crypto map <map-name> <sequence> set pfs group<dh-group>` | Enables Perfect Forward Secrecy for the crypto-map entry. |
+| **Apply crypto map:**<br>`(config)#crypto map <map-name> interface <interface-name>` | Applies the crypto map to the terminating interface. |
+
+**CCNP Security — ASA 9.x — VPN NAT Exemption**
+
+| Command | Description |
+|---|---|
+| **Create local network object:**<br>`(config)#object network <local-object>`<br>&nbsp;&nbsp;○ `(config-network-object)#subnet <local-network> <local-mask>` | Creates the local VPN network object. |
+| **Create remote network object:**<br>`(config)#object network <remote-object>`<br>&nbsp;&nbsp;○ `(config-network-object)#subnet <remote-network> <remote-mask>` | Creates the remote VPN network object. |
+| **Configure identity NAT:**<br>`(config)#nat (<inside-name>,<outside-name>) source static <local-object> <local-object> destination static <remote-object> <remote-object>` | Exempts site-to-site VPN traffic from address translation. |
+
+**CCNP Security — ASA 9.x — Remote-Access IKEv2**
+
+| Command | Description |
+|---|---|
+| **Set remote-access trustpoint:**<br>`(config)#crypto ikev2 remote-access trustpoint <trustpoint-name>` | Assigns the identity certificate for IKEv2 remote access. |
+| **Create dynamic crypto map:**<br>`(config)#crypto dynamic-map <dynamic-map-name> <sequence> set ikev2 ipsec-proposal <proposal-name>` | Associates an IKEv2 proposal with dynamic remote peers. |
+| **Attach dynamic map:**<br>`(config)#crypto map <map-name> <sequence> ipsec-isakmp dynamic <dynamic-map-name>` | Attaches the dynamic map to the parent crypto map. |
+| **Apply parent crypto map:**<br>`(config)#crypto map <map-name> interface <interface-name>` | Applies remote-access crypto processing to the interface. |
+| **Create group policy:**<br>`(config)#group-policy <group-policy-name> internal` | Creates a locally stored remote-access group policy. |
+| **Enter group-policy attributes:**<br>`(config)#group-policy <group-policy-name> attributes` | Enters remote-access group-policy attribute mode. |
+| **Permit IKEv2 tunnel protocol:**<br>`(config-group-policy)#vpn-tunnel-protocol ikev2` | Allows IKEv2 sessions for the group policy. |
+| **Create client address pool:**<br>`(config)#ip local pool <pool-name> <start-ip>-<end-ip> mask <subnet-mask>` | Creates the IPv4 pool assigned to VPN clients. |
+| **Create remote-access tunnel group:**<br>`(config)#tunnel-group <tunnel-group-name> type remote-access` | Creates an ASA remote-access connection profile. |
+| **Enter general attributes:**<br>`(config)#tunnel-group <tunnel-group-name> general-attributes` | Enters tunnel-group general attribute mode. |
+| **Assign client address pool:**<br>`(config-tunnel-general)#address-pool <pool-name>` | Assigns the VPN client address pool. |
+| **Assign default group policy:**<br>`(config-tunnel-general)#default-group-policy <group-policy-name>` | Associates the default group policy with the profile. |
+| **Set authentication server:**<br>`(config-tunnel-general)#authentication-server-group <aaa-server-group>` | Selects the AAA server group for user authentication. |
+| **Enter IPsec attributes:**<br>`(config)#tunnel-group <tunnel-group-name> ipsec-attributes` | Enters IKEv2 remote-access IPsec attribute mode. |
+| **Set remote certificate authentication:**<br>`(config-tunnel-ipsec)#ikev2 remote-authentication certificate` | Requires certificate authentication from remote clients. |
+| **Set local certificate authentication:**<br>`(config-tunnel-ipsec)#ikev2 local-authentication certificate <trustpoint-name>` | Uses the specified certificate for local authentication. |
+
+**CCNP Security — ASA 9.x — Clientless SSL VPN**
+
+| Command | Description |
+|---|---|
+| **Enter WebVPN configuration:**<br>`(config)#webvpn` | Enters ASA WebVPN configuration mode. |
+| **Enable SSL VPN interface:**<br>`(config-webvpn)#enable <interface-name>` | Enables SSL VPN termination on the selected interface. |
+| **Create WebType ACL:**<br>`(config)#access-list <acl-name> webtype permit url <url>` | Permits the specified URL through clientless SSL VPN. |
+| **Enter policy WebVPN attributes:**<br>`(config)#group-policy <group-policy-name> attributes`<br>&nbsp;&nbsp;○ `(config-group-policy)#webvpn` | Enters WebVPN attributes for the group policy. |
+| **Apply WebType filter:**<br>`(config-group-webvpn)#filter value <acl-name>` | Applies the WebType ACL to the clientless policy. |
+
+**CCNP Security — ASA 9.x — VPN Verification**
+
+| Command | Description |
+|---|---|
+| **Show IKEv2 SAs:**<br>`#show crypto ikev2 sa` | Displays active ASA IKEv2 security associations. |
+| **Show IPsec SAs:**<br>`#show crypto ipsec sa` | Displays ASA IPsec SAs and packet counters. |
+| **Show site-to-site sessions:**<br>`#show vpn-sessiondb l2l` | Displays active LAN-to-LAN VPN sessions. |
+| **Show detailed VPN sessions:**<br>`#show vpn-sessiondb detail` | Displays detailed VPN session statistics. |
+| **Show remote-access sessions:**<br>`#show vpn-sessiondb anyconnect` | Displays active Cisco Secure Client sessions. |
+
+**CCNP Security — Secure Firewall Threat Defense — VPN Verification Only**
+
+| Command | Description |
+|---|---|
+| **Show deployed crypto configuration:**<br>`> show running-config crypto` | Displays FMC-deployed VPN crypto configuration. |
+| **Show all VPN sessions:**<br>`> show vpn-sessiondb detail` | Displays detailed active VPN session information. |
+| **Show site-to-site sessions:**<br>`> show vpn-sessiondb detail l2l` | Displays detailed LAN-to-LAN VPN session information. |
+| **Show remote-access sessions:**<br>`> show vpn-sessiondb anyconnect` | Displays active Secure Client remote-access sessions. |
+| **Show IKEv2 SAs:**<br>`> show crypto ikev2 sa` | Displays active Threat Defense IKEv2 security associations. |
+| **Show IPsec SAs:**<br>`> show crypto ipsec sa` | Displays active Threat Defense IPsec security associations. |
+
+
 </div>
